@@ -10,7 +10,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<fx:root type="javafx.scene.layout.AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="480.0" styleClass="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id = "root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="480.0" styleClass="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kadai1.Detailed">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -34,9 +34,9 @@
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label prefWidth="55.0" text="タイトル" />
-                        <TextField editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id = "titleField" editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                         <Label prefWidth="55.0" text="ジャンル" />
-                        <TextField editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id = "genreField" editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>
@@ -46,9 +46,9 @@
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label prefWidth="55.0" text="著者" />
-                        <TextField editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id = "writerField" editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                         <Label prefWidth="55.0" text="出版社" />
-                        <TextField editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id = "publisherField" editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>
@@ -58,9 +58,9 @@
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label prefWidth="55.0" text="期間" />
-                        <TextField editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id = "startField" editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                         <Label alignment="CENTER" prefWidth="55.0" text="～" />
-                        <TextField editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id = "endField" editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>
@@ -70,7 +70,7 @@
                   <VBox layoutY="19.0" prefWidth="470.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label text="メモ" />
-                        <TextArea editable="false" prefHeight="125.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                        <TextArea fx:id = "textField" editable="false" prefHeight="125.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                      </children>
                   </VBox>
                </children>
@@ -85,7 +85,7 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" prefWidth="50.0" text="戻る">
+                        <Button onAction = "#close" mnemonicParsing="false" prefWidth="50.0" text="戻る">
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>
@@ -100,4 +100,4 @@
    <stylesheets>
      <URL value="@./style.css" />
    </stylesheets>
-</fx:root>
+</AnchorPane>

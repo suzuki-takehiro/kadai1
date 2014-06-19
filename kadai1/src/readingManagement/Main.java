@@ -30,8 +30,8 @@ public class Main extends Application {
         // ステージの設定
         stage = primaryStage;
         stage.setTitle("ReadingManagement");
-        stage.setWidth(480);
-        stage.setHeight(360);
+        stage.setWidth(600);
+        stage.setHeight(540);
 
         // Searchに遷移
         sendSearch();
@@ -66,11 +66,11 @@ public class Main extends Application {
     }
 
     //ページ遷移Detailed
-    public void sendDetailed() {
+    /*public void sendDetailed() {
 
     	Detailed controller = new Detailed();
         this.replaceSceneContent(controller);
-    }
+    }*/
 
     /**
      * シーンの変更

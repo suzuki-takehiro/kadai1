@@ -9,8 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -94,10 +92,13 @@ public class Register extends AnchorPane implements Initializable {
 	@FXML
 	private TableColumn<View, String> textColumn;
 
+	@FXML
+	private TableColumn<View, String> buttonColumn;
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
-		// ViewクラスとViewConクラスの対応付け
+		// ViewクラスとRegisterクラスの対応付け
 		idColumn.setCellValueFactory(new PropertyValueFactory<View, String>(
 				"id"));
 		titleColumn.setCellValueFactory(new PropertyValueFactory<View, String>(
@@ -116,8 +117,12 @@ public class Register extends AnchorPane implements Initializable {
 				"end"));
 		textColumn.setCellValueFactory(new PropertyValueFactory<View, String>(
 				"text"));
+		buttonColumn
+				.setCellValueFactory(new PropertyValueFactory<View, String>(
+						"id"));
 
 		try {
+			buttonColumn.setCellFactory(new OpenerFactory());
 			// JDBCドライバーの指定
 			Class.forName("org.sqlite.JDBC");
 
@@ -160,28 +165,33 @@ public class Register extends AnchorPane implements Initializable {
 			System.out.println("Exception:" + e.getMessage());
 		}
 
-		//テーブルレコードのクリックイベント
-		TableView.TableViewSelectionModel<View> selectionModel = table.getSelectionModel();
-	    selectionModel.selectedItemProperty().addListener(new ChangeListener<View>() {
-
-	        public void changed(ObservableValue<? extends View> value, View old, View next) {
-	        	String id = next.getId();
-	            System.out.println(id);
-
-	            FXMLLoader loader = new FXMLLoader(getClass().getResource("Dialog.fxml")); try {
-					loader.load();
-				} catch (IOException e) {
-					// TODO 自動生成された catch ブロック
-					e.printStackTrace();
-				}
-				Parent root = loader.getRoot();
-				//Dialog controller = loader.getController();
-				Scene scene = new Scene(root);
-				Stage stage = new Stage(); stage.setTitle("confirmation");
-				stage.setScene(scene); stage.showAndWait();
-
-	        }
-	    });
+		// テーブルレコードのクリックイベント
+		/*
+		 * TableView.TableViewSelectionModel<View> selectionModel = table
+		 * .getSelectionModel(); System.out.println(table.getId());
+		 * selectionModel.selectedItemProperty().addListener( new
+		 * ChangeListener<View>() {
+		 *
+		 * public void changed(ObservableValue<? extends View> value, View old,
+		 * View next) { String title = next.getTitle(); String genre =
+		 * next.getGenre(); String writer = next.getWriter(); String publisher =
+		 * next.getPublisher(); String start = next.getStart(); String end =
+		 * next.getEnd(); String text = next.getText();
+		 * //System.out.println(title + genre + writer + publisher + start + end
+		 * + text);
+		 *
+		 * // Detailedウィンドウ表示 FXMLLoader loader = new FXMLLoader(getClass()
+		 * .getResource("detailed.fxml")); try { loader.load(); } catch
+		 * (IOException e) { // TODO 自動生成された catch ブロック e.printStackTrace(); }
+		 * Parent root = loader.getRoot(); Detailed controller =
+		 * loader.getController(); controller.setStates(title, genre, writer,
+		 * publisher, start, end, text); Scene scene = new Scene(root); Stage
+		 * stage = new Stage(); stage.setTitle("confirmation");
+		 * stage.setScene(scene); stage.setWidth(540); stage.setHeight(480);
+		 * stage.showAndWait();
+		 *
+		 * } });
+		 */
 	}
 
 	@FXML
@@ -197,7 +207,7 @@ public class Register extends AnchorPane implements Initializable {
 	@FXML
 	public void regist() {
 
-		table.setItems(null);
+		// table.setItems(null);
 
 		String getTitle = titleField.getText();
 
@@ -213,42 +223,116 @@ public class Register extends AnchorPane implements Initializable {
 
 		String getText = textField.getText();
 
+		// System.out.println(getTitle);
+
+		if (titleField.getText().matches(".+")
+				&& startField.getText().matches(".+")
+				&& endField.getText().matches(".+")) {
+			try {
+				buttonColumn.setCellFactory(new OpenerFactory());
+				// JDBCドライバーの指定
+				Class.forName("org.sqlite.JDBC");
+
+				// データベースに接続する なければ作成される
+				Connection con = DriverManager
+						.getConnection("jdbc:sqlite:C:/SQLiteDB/test");
+
+				// Statementオブジェクト作成
+				Statement stmt = con.createStatement();
+
+				// 問合せ文
+				// レコード数取得SQL
+				String sqlcount = "select count(*) from test";
+				ResultSet num = stmt.executeQuery(sqlcount);
+
+				String numId = Integer.toString(num.getInt("count(*)") + 1);
+				// System.out.println(numId);
+
+				// 登録SQL
+				String sqlins = "insert into test values(" + numId + ",'"
+						+ getTitle + "','" + getGenre + "','" + getWriter
+						+ "','" + getPublisher + "','" + getStart + "','"
+						+ getEnd + "','" + getText + "')";
+				stmt.executeUpdate(sqlins);
+
+				// テーブルの中身を削除
+				table.getItems().clear();
+
+				// データ取得sql
+				String sql = "select * from test order by id desc limit 10";
+				ResultSet rs = stmt.executeQuery(sql);
+
+				// データ表示
+				while (rs.next()) {
+					String id = rs.getString("id");
+					String title = rs.getString("title");
+					String genre = rs.getString("genre");
+					String writer = rs.getString("writer");
+					String publisher = rs.getString("publisher");
+					String start = rs.getString("start");
+					String end = rs.getString("end");
+					String text = rs.getString("text");
+					table.getItems().add(
+							new View(id, title, genre, writer, publisher,
+									start, end, text));
+				}
+
+				num.close();
+				rs.close();
+				stmt.close();
+
+			} catch (ClassNotFoundException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+
+		} else {
+
+			if (!(titleField.getText().matches(".+"))) {
+				setText("タイトル ");
+			}
+			if (!(startField.getText().matches(".+"))) {
+				setText("開始期間 ");
+			}
+			if (!(endField.getText().matches(".+"))) {
+				setText("終了期間 ");
+			}
+
+			showDialog();
+
+		}
+	}
+
+	public String error = "";
+
+	public void setText(String koumoku) {
+		error = error + koumoku;
+	}
+
+	public void showDialog() {
+		// エラーダイアログ表示
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(
+				"errorDialog.fxml"));
 		try {
-
-			// JDBCドライバーの指定
-			Class.forName("org.sqlite.JDBC");
-
-			// データベースに接続する なければ作成される
-			Connection con = DriverManager
-					.getConnection("jdbc:sqlite:C:/SQLiteDB/test");
-
-			// Statementオブジェクト作成
-			Statement stmt = con.createStatement();
-
-			// 問合せ文
-			String sqlcount = "select count(*) from test";
-			ResultSet num = stmt.executeQuery(sqlcount);
-			String numId = Integer.toString(num.getInt("count(*)") + 1);
-
-			System.out.println(numId);
-			String sql = "insert into test values(" + numId + ",'" + getTitle
-					+ "','" + getGenre + "','" + getWriter + "','"
-					+ getPublisher + "','" + getStart + "','" + getEnd + "','"
-					+ getText + "')";
-
-			stmt.executeUpdate(sql);
-
-			num.close();
-			stmt.close();
-
-		} catch (ClassNotFoundException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		} catch (SQLException e) {
+			loader.load();
+		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 
-		Main.getInstance().sendRegister();
+		ErrorDialog controller = loader.getController();
+		controller.setMessage(error);
+		Parent root = loader.getRoot();
+		Scene scene = new Scene(root);
+		Stage stage = new Stage();
+		stage.setTitle("confirmation");
+		stage.setScene(scene);
+		stage.setResizable(false);
+		stage.show();
+		error = "";
 	}
 }
+
