@@ -10,20 +10,10 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id = "root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="480.0" styleClass="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="readingManagement.Detailed">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="480.0" styleClass="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sqlite.Detailed">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane styleClass="tabBack">
-               <children>
-                  <HBox prefHeight="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label alignment="CENTER" prefHeight="25.0" prefWidth="50.0" styleClass="offtabButton" text="検索" />
-                        <Label alignment="CENTER" prefHeight="25.0" prefWidth="50.0" styleClass="offtabButton" text="登録" />
-                     </children>
-                  </HBox>
-               </children>
-            </AnchorPane>
             <AnchorPane prefHeight="30.0" styleClass="content1">
                <children>
                   <Label prefWidth="125.0" text="書籍詳細" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
@@ -34,9 +24,9 @@
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label prefWidth="55.0" text="タイトル" />
-                        <TextField fx:id = "titleField" editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="titleField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                         <Label prefWidth="55.0" text="ジャンル" />
-                        <TextField fx:id = "genreField" editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="genreField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>
@@ -46,9 +36,9 @@
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label prefWidth="55.0" text="著者" />
-                        <TextField fx:id = "writerField" editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="writerField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                         <Label prefWidth="55.0" text="出版社" />
-                        <TextField fx:id = "publisherField" editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="publisherField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>
@@ -58,19 +48,19 @@
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label prefWidth="55.0" text="期間" />
-                        <TextField fx:id = "startField" editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="startField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                         <Label alignment="CENTER" prefWidth="55.0" text="～" />
-                        <TextField fx:id = "endField" editable="false" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="endField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="500.0" prefWidth="480.0">
+            <AnchorPane prefHeight="500.0" prefWidth="480.0" VBox.vgrow="ALWAYS">
                <children>
                   <VBox layoutY="19.0" prefWidth="470.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label text="メモ" />
-                        <TextArea fx:id = "textField" editable="false" prefHeight="125.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                        <TextArea fx:id="textField" prefHeight="125.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                      </children>
                   </VBox>
                </children>
@@ -79,13 +69,13 @@
                <children>
                   <HBox prefHeight="25.0" prefWidth="190.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Button mnemonicParsing="false" prefWidth="50.0" text="編集" />
-                        <Button mnemonicParsing="false" prefWidth="50.0" text="削除">
+                        <Button onAction = "#onEdit" prefWidth="50.0" text="編集" />
+                        <Button onAction = "#onDelete" prefWidth="50.0" text="削除" >
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Button>
-                        <Button onAction = "#close" mnemonicParsing="false" prefWidth="50.0" text="戻る">
+                        <Button mnemonicParsing="false" onAction="#close" prefWidth="50.0" text="戻る">
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>

@@ -20,6 +20,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Register extends AnchorPane implements Initializable {
@@ -306,33 +307,35 @@ public class Register extends AnchorPane implements Initializable {
 		}
 	}
 
-	public String error = "";
+	public static String error = "";
 
 	public void setText(String koumoku) {
 		error = error + koumoku;
 	}
 
-	public void showDialog() {
+	public static void showDialog() {
 		// エラーダイアログ表示
-		FXMLLoader loader = new FXMLLoader(getClass().getResource(
-				"errorDialog.fxml"));
+		FXMLLoader loader = new FXMLLoader(
+				Register.class.getResource("errorDialog.fxml"));
 		try {
 			loader.load();
 		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-
+		error = error + "を入力してください。";
 		ErrorDialog controller = loader.getController();
 		controller.setMessage(error);
 		Parent root = loader.getRoot();
 		Scene scene = new Scene(root);
-		Stage stage = new Stage();
-		stage.setTitle("confirmation");
-		stage.setScene(scene);
-		stage.setResizable(false);
-		stage.show();
+		Stage stage2 = new Stage();
+
+		stage2.initOwner(Main.stage);
+		stage2.initModality(Modality.APPLICATION_MODAL);
+		stage2.setTitle("Error");
+		stage2.setScene(scene);
+		stage2.setResizable(false);
+		stage2.showAndWait();
 		error = "";
 	}
 }
-

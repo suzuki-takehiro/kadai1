@@ -21,7 +21,7 @@ public class ErrorDialog implements Initializable {
 	public Label label;
 
 	public void setMessage(String message){
-		label.setText(message + "を入力してください。");
+		label.setText(message);
 	}
 
 	@FXML

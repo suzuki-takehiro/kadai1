@@ -18,29 +18,52 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 class OpenerFactory implements
-Callback<TableColumn<View, String>, TableCell<View, String>> {
+		Callback<TableColumn<View, String>, TableCell<View, String>> {
 
-@Override
-public TableCell<View, String> call(TableColumn<View, String> param) {
-TableCell<View, String> tableCell = new TableCell<View, String>() {
+	@Override
+	public TableCell<View, String> call(TableColumn<View, String> param) {
+		TableCell<View, String> tableCell = new TableCell<View, String>() {
 
-	private Pane pane = createPane();
+			private Pane pane = createPane();
 
-	private String id;
+			private String id;
 
-	private Pane createPane() {
-		HBox pane = new HBox();
-		pane.setAlignment(Pos.CENTER);
+			private Pane createPane() {
+				HBox pane = new HBox();
+				pane.setAlignment(Pos.CENTER);
 
-		Button button = new Button("詳細を開く");
-		button.setOnAction(new EventHandler<ActionEvent>() {
+				Button button = new Button("詳細を開く");
+				button.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent event) {
+						openDialog();
+					}
+				});
+				pane.getChildren().add(button);
+				return pane;
+			}
 
 			@Override
-			public void handle(ActionEvent event) {
+			protected void updateItem(String id, boolean empty) {
+				super.updateItem(id, empty);
+				if (empty == false) {
+					this.id = id;
+					setGraphic(pane);
+				}
+			}
+
+			/*
+			 * public void goDetailed(){ SubMain.getInstance().sendDetailed(id);
+			 * }
+			 */
+
+			public void openDialog() {
 				try {
 					// JDBCドライバーの指定
 					Class.forName("org.sqlite.JDBC");
@@ -53,8 +76,7 @@ TableCell<View, String> tableCell = new TableCell<View, String>() {
 					Statement stmt = con.createStatement();
 
 					// sql文作成
-					String sql = "select * from test where id = " + id
-							+ "";
+					String sql = "select * from test where id = " + id + "";
 
 					// sql問合せ
 					ResultSet rs = stmt.executeQuery(sql);
@@ -68,13 +90,16 @@ TableCell<View, String> tableCell = new TableCell<View, String>() {
 					String start = rs.getString("start");
 					String end = rs.getString("end");
 					String text = rs.getString("text");
-					/*System.out.println(id + title + genre + writer
-							+ publisher + start + end + text);*/
+					System.out.println(id + title + genre + writer + publisher
+							+ start + end + text);
 					// }
 
+					rs.close();
+					stmt.close();
+
 					// Detailedウィンドウ表示
-					FXMLLoader loader = new FXMLLoader(getClass()
-							.getResource("detailed.fxml"));
+					FXMLLoader loader = new FXMLLoader(getClass().getResource(
+							"detailed.fxml"));
 					try {
 						loader.load();
 					} catch (IOException e) {
@@ -83,19 +108,18 @@ TableCell<View, String> tableCell = new TableCell<View, String>() {
 					}
 					Parent root = loader.getRoot();
 					Detailed controller = loader.getController();
-					controller.setStates(title, genre, writer,
-							publisher, start, end, text);
+					controller.setStates(id, title, genre, writer, publisher,
+							start, end, text);
 					Scene scene = new Scene(root);
 					Stage stage = new Stage();
-					stage.setTitle("confirmation");
+					stage.setTitle("Detailed");
 					stage.setScene(scene);
 					stage.setWidth(540);
-					stage.setHeight(480);
+					stage.setHeight(280);
+					stage.initOwner(Main.stage);
+					stage.initModality(Modality.WINDOW_MODAL);
 					stage.showAndWait();
-					//System.out.println(id);
-
-					rs.close();
-					stmt.close();
+					// System.out.println(id);
 
 				} catch (ClassNotFoundException e) {
 					System.out.println("ClassNotFoundException:"
@@ -105,22 +129,40 @@ TableCell<View, String> tableCell = new TableCell<View, String>() {
 				} catch (Exception e) {
 					System.out.println("Exception:" + e.getMessage());
 				}
-
 			}
-		});
-		pane.getChildren().add(button);
-		return pane;
+
+			// ページ遷移Detailed
+			/*
+			 * public void sendDetailed() {
+			 *
+			 * Detailed controller = new Detailed();
+			 * this.replaceSceneContent(controller); }
+			 */
+
+		};
+		return tableCell;
 	}
 
-	@Override
-	protected void updateItem(String id, boolean empty) {
-		super.updateItem(id, empty);
-		if (empty == false) {
-			this.id = id;
-			setGraphic(pane);
-		}
-	}
-};
-return tableCell;
-}
+	/**
+	 * Get Instance
+	 */
+	/*
+	 * public static OpenerFactory getInstance() { return instance; }
+	 */
+
+	// ページ遷移Edit
+	/*
+	 * public void sendEdit() {
+	 *
+	 * Edit controller = new Edit(); this.replaceSceneContent(controller); }
+	 */
+
+	/**
+	 * シーンの変更
+	 */
+	/*
+	 * private void replaceSceneContent(Parent controller) { Scene scene =
+	 * stage.getScene(); if (scene == null) { scene = new Scene(controller);
+	 * stage.setScene(scene); } else { stage.getScene().setRoot(controller); } }
+	 */
 }

@@ -15,7 +15,7 @@ public class Main extends Application {
     /**
      * ステージ
      */
-    private Stage stage;
+    public static Stage stage;
 
     public void start(Stage primaryStage) throws Exception {
         /*AnchorPane main = FXMLLoader.load(Main.class.getResource("search.fxml"));
@@ -55,13 +55,6 @@ public class Main extends Application {
     public void sendSearch() {
 
     	Search controller = new Search();
-        this.replaceSceneContent(controller);
-    }
-
-    //ページ遷移Edit
-    public void sendEdit() {
-
-    	Edit controller = new Edit();
         this.replaceSceneContent(controller);
     }
 

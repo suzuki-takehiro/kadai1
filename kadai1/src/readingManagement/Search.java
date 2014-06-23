@@ -198,46 +198,30 @@ public class Search extends AnchorPane implements Initializable {
 			System.out.println("Exception:" + e.getMessage());
 		}
 
-		/*// テーブルレコードのクリックイベント
-		TableView.TableViewSelectionModel<View> selectionModel = table
-				.getSelectionModel();
-		selectionModel.selectedItemProperty().addListener(
-				new ChangeListener<View>() {
-
-					public void changed(ObservableValue<? extends View> value,
-							View old, View next) {
-						String title = next.getTitle();
-						String genre = next.getGenre();
-						String writer = next.getWriter();
-						String publisher = next.getPublisher();
-						String start = next.getStart();
-						String end = next.getEnd();
-						String text = next.getText();
-						System.out.println(title + genre + writer + publisher
-								+ start + end + text);
-
-						// Detailedウィンドウ表示
-						FXMLLoader loader = new FXMLLoader(getClass()
-								.getResource("detailed.fxml"));
-						try {
-							loader.load();
-						} catch (IOException e) {
-							// TODO 自動生成された catch ブロック
-							e.printStackTrace();
-						}
-						Parent root = loader.getRoot();
-						Detailed controller = loader.getController();
-						controller.setStates(title, genre, writer, publisher,
-								start, end, text);
-						Scene scene = new Scene(root);
-						Stage stage = new Stage();
-						stage.setTitle("confirmation");
-						stage.setScene(scene);
-						stage.setWidth(540);
-						stage.setHeight(480);
-						stage.showAndWait();
-
-					}
-				});*/
+		/*
+		 * // テーブルレコードのクリックイベント TableView.TableViewSelectionModel<View>
+		 * selectionModel = table .getSelectionModel();
+		 * selectionModel.selectedItemProperty().addListener( new
+		 * ChangeListener<View>() {
+		 *
+		 * public void changed(ObservableValue<? extends View> value, View old,
+		 * View next) { String title = next.getTitle(); String genre =
+		 * next.getGenre(); String writer = next.getWriter(); String publisher =
+		 * next.getPublisher(); String start = next.getStart(); String end =
+		 * next.getEnd(); String text = next.getText(); System.out.println(title
+		 * + genre + writer + publisher + start + end + text);
+		 *
+		 * // Detailedウィンドウ表示 FXMLLoader loader = new FXMLLoader(getClass()
+		 * .getResource("detailed.fxml")); try { loader.load(); } catch
+		 * (IOException e) { // TODO 自動生成された catch ブロック e.printStackTrace(); }
+		 * Parent root = loader.getRoot(); Detailed controller =
+		 * loader.getController(); controller.setStates(title, genre, writer,
+		 * publisher, start, end, text); Scene scene = new Scene(root); Stage
+		 * stage = new Stage(); stage.setTitle("confirmation");
+		 * stage.setScene(scene); stage.setWidth(540); stage.setHeight(480);
+		 * stage.showAndWait();
+		 *
+		 * } });
+		 */
 	}
 }

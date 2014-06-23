@@ -10,20 +10,10 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<fx:root type="javafx.scene.layout.AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="480.0" styleClass="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="480.0" styleClass="root" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane styleClass="tabBack">
-               <children>
-                  <HBox prefHeight="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label alignment="CENTER" prefHeight="25.0" prefWidth="50.0" styleClass="offtabButton" text="検索" />
-                        <Label alignment="CENTER" prefHeight="25.0" prefWidth="50.0" styleClass="offtabButton" text="登録" />
-                     </children>
-                  </HBox>
-               </children>
-            </AnchorPane>
             <AnchorPane prefHeight="30.0" styleClass="content1">
                <children>
                   <Label prefWidth="125.0" text="書籍詳細" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
