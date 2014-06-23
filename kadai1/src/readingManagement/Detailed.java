@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -56,10 +58,10 @@ public class Detailed extends AnchorPane implements Initializable {
 	private TextField publisherField;
 
 	@FXML
-	private TextField startField;
+	private DatePicker startField;
 
 	@FXML
-	private TextField endField;
+	private DatePicker endField;
 
 	@FXML
 	private TextArea textField;
@@ -67,15 +69,15 @@ public class Detailed extends AnchorPane implements Initializable {
 	// テキストフィールド変更不可 editable="false"
 
 	public void setStates(String setid, String title, String genre,
-			String writer, String publisher, String start, String end,
+			String writer, String publisher, LocalDate start, LocalDate end,
 			String text) {
 		id = setid;
 		titleField.setText(title);
 		genreField.setText(genre);
 		writerField.setText(writer);
 		publisherField.setText(publisher);
-		startField.setText(start);
-		endField.setText(end);
+		startField.setValue(start);
+		endField.setValue(end);
 		textField.setText(text);
 
 	}
@@ -101,14 +103,32 @@ public class Detailed extends AnchorPane implements Initializable {
 		ynFlag = ans;
 	};
 
+	static String RorSFlag = "";
+
+	public static void setRorSFlag(String ans) {
+		RorSFlag = ans;
+	};
+
 	@FXML
 	public void onEdit() {
 		flag = "edit";
 		openDialog();
 		if (ynFlag.equals("yes")) {
 			regist();
+			if(RorSFlag.equals("s")){
+				System.out.println("nnoo");
+				toSearch();
+				}else if(RorSFlag.equals("r")){
+					System.out.println("OOKK");
+					}
 			showDialog("r");
 		}
+	}
+
+	private void toSearch() {
+		Search a = new Search();
+		a.search();
+
 	}
 
 	@FXML
@@ -161,17 +181,19 @@ public class Detailed extends AnchorPane implements Initializable {
 
 		String getPublisher = publisherField.getText();
 
-		String getStart = startField.getText();
+		String getStart = "";
+		if (!(startField.getValue() == null)) {getStart = startField.getValue().toString();}
 
-		String getEnd = endField.getText();
+		String getEnd = "";
+		if (!(endField.getValue() == null)) {getEnd = endField.getValue().toString();}
 
 		String getText = textField.getText();
 
 		// System.out.println(getTitle);
 
 		if (titleField.getText().matches(".+")
-				&& startField.getText().matches(".+")
-				&& endField.getText().matches(".+")) {
+				&& !(startField.getValue() == null)
+				&& !(endField.getValue() == null)) {
 			try {
 				// JDBCドライバーの指定
 				Class.forName("org.sqlite.JDBC");
@@ -207,10 +229,10 @@ public class Detailed extends AnchorPane implements Initializable {
 			if (!(titleField.getText().matches(".+"))) {
 				setText("タイトル ");
 			}
-			if (!(startField.getText().matches(".+"))) {
+			if ((startField.getValue() == null)) {
 				setText("開始期間 ");
 			}
-			if (!(endField.getText().matches(".+"))) {
+			if ((endField.getValue() == null)) {
 				setText("終了期間 ");
 			}
 
@@ -249,30 +271,32 @@ public class Detailed extends AnchorPane implements Initializable {
 		}
 	}
 
+	// エラーダイアログ表示メッセージ
 	public static String error = "";
 
 	public void setText(String koumoku) {
 		error = error + koumoku;
 	}
 
+	// メッセージダイアログ表示
 	public static void showDialog(String type) {
+
 		String messageType = type;
-		// メッセージダイアログ表示
+
 		FXMLLoader loader = new FXMLLoader(
 				Register.class.getResource("errorDialog.fxml"));
 		try {
 			loader.load();
 		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 
 		Parent root = loader.getRoot();
 		Scene scene = new Scene(root);
 		Stage stage2 = new Stage();
-
 		stage2.initOwner(Main.stage);
 		stage2.initModality(Modality.APPLICATION_MODAL);
+
 		if(messageType.equals("e")){
 			stage2.setTitle("Error");
 			error = error + "を入力してください。";
@@ -283,8 +307,10 @@ public class Detailed extends AnchorPane implements Initializable {
 			stage2.setTitle("Confirmation");
 			error = "削除しました。";
 		}
+
 		ErrorDialog controller = loader.getController();
 		controller.setMessage(error);
+
 		stage2.setScene(scene);
 		stage2.setResizable(false);
 		stage2.showAndWait();

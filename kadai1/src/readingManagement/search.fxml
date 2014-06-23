@@ -68,7 +68,7 @@
                   </HBox>
                </children>
             </AnchorPane>
-            <AnchorPane minHeight="-Infinity" prefHeight="30.0" styleClass="content1">
+            <AnchorPane minHeight="-Infinity" prefHeight="30.0" styleClass="content1" VBox.vgrow="ALWAYS">
                <children>
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -76,16 +76,20 @@
                            <HBox.margin>
                               <Insets />
                            </HBox.margin></Label>
-                        <TextField fx:id="startField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <DatePicker fx:id="startField" HBox.hgrow="ALWAYS" />
                         <Label alignment="CENTER" prefWidth="55.0" text="～">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin></Label>
-                        <TextField fx:id="endField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" onAction="#search" prefWidth="50.0" text="検索">
+                        <DatePicker fx:id="endField" HBox.hgrow="ALWAYS" />
+                        <AnchorPane HBox.hgrow="ALWAYS">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#search" prefWidth="50.0" text="検索" AnchorPane.rightAnchor="0.0" />
+                           </children>
                            <HBox.margin>
                               <Insets left="5.0" />
-                           </HBox.margin></Button>
+                           </HBox.margin>
+                        </AnchorPane>
                      </children>
                   </HBox>
                </children>

@@ -58,9 +58,9 @@
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label prefWidth="55.0" text="期間" />
-                        <TextField fx:id="startField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <DatePicker fx:id="startField" HBox.hgrow="ALWAYS" />
                         <Label alignment="CENTER" prefWidth="55.0" text="～" />
-                        <TextField fx:id="endField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <DatePicker fx:id="endField" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>

@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -58,11 +59,6 @@ class OpenerFactory implements
 				}
 			}
 
-			/*
-			 * public void goDetailed(){ SubMain.getInstance().sendDetailed(id);
-			 * }
-			 */
-
 			public void openDialog() {
 				try {
 					// JDBCドライバーの指定
@@ -81,18 +77,14 @@ class OpenerFactory implements
 					// sql問合せ
 					ResultSet rs = stmt.executeQuery(sql);
 
-					// データ表示
-					// while (rs.next()) {
+					// Detailed表示データ取得
 					String title = rs.getString("title");
 					String genre = rs.getString("genre");
 					String writer = rs.getString("writer");
 					String publisher = rs.getString("publisher");
-					String start = rs.getString("start");
-					String end = rs.getString("end");
+					LocalDate start = LocalDate.parse(rs.getString("start"));
+					LocalDate end = LocalDate.parse(rs.getString("end"));
 					String text = rs.getString("text");
-					System.out.println(id + title + genre + writer + publisher
-							+ start + end + text);
-					// }
 
 					rs.close();
 					stmt.close();
@@ -103,7 +95,6 @@ class OpenerFactory implements
 					try {
 						loader.load();
 					} catch (IOException e) {
-						// TODO 自動生成された catch ブロック
 						e.printStackTrace();
 					}
 					Parent root = loader.getRoot();
@@ -119,7 +110,6 @@ class OpenerFactory implements
 					stage.initOwner(Main.stage);
 					stage.initModality(Modality.WINDOW_MODAL);
 					stage.showAndWait();
-					// System.out.println(id);
 
 				} catch (ClassNotFoundException e) {
 					System.out.println("ClassNotFoundException:"
@@ -131,38 +121,7 @@ class OpenerFactory implements
 				}
 			}
 
-			// ページ遷移Detailed
-			/*
-			 * public void sendDetailed() {
-			 *
-			 * Detailed controller = new Detailed();
-			 * this.replaceSceneContent(controller); }
-			 */
-
 		};
 		return tableCell;
 	}
-
-	/**
-	 * Get Instance
-	 */
-	/*
-	 * public static OpenerFactory getInstance() { return instance; }
-	 */
-
-	// ページ遷移Edit
-	/*
-	 * public void sendEdit() {
-	 *
-	 * Edit controller = new Edit(); this.replaceSceneContent(controller); }
-	 */
-
-	/**
-	 * シーンの変更
-	 */
-	/*
-	 * private void replaceSceneContent(Parent controller) { Scene scene =
-	 * stage.getScene(); if (scene == null) { scene = new Scene(controller);
-	 * stage.setScene(scene); } else { stage.getScene().setRoot(controller); } }
-	 */
 }

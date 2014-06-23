@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -55,10 +56,10 @@ public class Search extends AnchorPane implements Initializable {
 	private TextField publisherField;
 
 	@FXML
-	private TextField startField;
+	private DatePicker startField;
 
 	@FXML
-	private TextField endField;
+	private DatePicker endField;
 
 	@FXML
 	private TextArea textField;
@@ -118,6 +119,8 @@ public class Search extends AnchorPane implements Initializable {
 		buttonColumn
 				.setCellValueFactory(new PropertyValueFactory<View, String>(
 						"id"));
+
+		Detailed.setRorSFlag("s");
 	}
 
 	@FXML
@@ -145,9 +148,11 @@ public class Search extends AnchorPane implements Initializable {
 
 		String getPublisher = publisherField.getText();
 
-		String getStart = startField.getText();
+		String getStart = "";
+		if (!(startField.getValue() == null)) {getStart = startField.getValue().toString();}
 
-		String getEnd = endField.getText();
+		String getEnd = "";
+		if (!(endField.getValue() == null)) {getEnd = endField.getValue().toString();}
 
 		try {
 
@@ -180,8 +185,6 @@ public class Search extends AnchorPane implements Initializable {
 				String start = rs.getString("start");
 				String end = rs.getString("end");
 				String text = rs.getString("text");
-				// System.out.println(id + title + genre + writer + publisher +
-				// start + end + text);
 				table.getItems().add(
 						new View(id, title, genre, writer, publisher, start,
 								end, text));
@@ -197,31 +200,5 @@ public class Search extends AnchorPane implements Initializable {
 		} catch (Exception e) {
 			System.out.println("Exception:" + e.getMessage());
 		}
-
-		/*
-		 * // テーブルレコードのクリックイベント TableView.TableViewSelectionModel<View>
-		 * selectionModel = table .getSelectionModel();
-		 * selectionModel.selectedItemProperty().addListener( new
-		 * ChangeListener<View>() {
-		 *
-		 * public void changed(ObservableValue<? extends View> value, View old,
-		 * View next) { String title = next.getTitle(); String genre =
-		 * next.getGenre(); String writer = next.getWriter(); String publisher =
-		 * next.getPublisher(); String start = next.getStart(); String end =
-		 * next.getEnd(); String text = next.getText(); System.out.println(title
-		 * + genre + writer + publisher + start + end + text);
-		 *
-		 * // Detailedウィンドウ表示 FXMLLoader loader = new FXMLLoader(getClass()
-		 * .getResource("detailed.fxml")); try { loader.load(); } catch
-		 * (IOException e) { // TODO 自動生成された catch ブロック e.printStackTrace(); }
-		 * Parent root = loader.getRoot(); Detailed controller =
-		 * loader.getController(); controller.setStates(title, genre, writer,
-		 * publisher, start, end, text); Scene scene = new Scene(root); Stage
-		 * stage = new Stage(); stage.setTitle("confirmation");
-		 * stage.setScene(scene); stage.setWidth(540); stage.setHeight(480);
-		 * stage.showAndWait();
-		 *
-		 * } });
-		 */
 	}
 }
