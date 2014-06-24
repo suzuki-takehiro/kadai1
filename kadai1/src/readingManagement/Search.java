@@ -23,9 +23,13 @@ import javafx.scene.layout.AnchorPane;
 public class Search extends AnchorPane implements Initializable {
 
 	public Search() {
-
 		loadFXML();
 	}
+
+    /**
+     * Main class instance
+     */
+    private static Search instance;
 
 	private void loadFXML() {
 
@@ -68,9 +72,6 @@ public class Search extends AnchorPane implements Initializable {
 	private TableView<View> table;
 
 	@FXML
-	private TableColumn<View, String> idColumn;
-
-	@FXML
 	private TableColumn<View, String> titleColumn;
 
 	@FXML
@@ -97,9 +98,10 @@ public class Search extends AnchorPane implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
+        // インスタンス
+        instance = this;
+
 		// ViewクラスとSearchクラスの対応付け
-		idColumn.setCellValueFactory(new PropertyValueFactory<View, String>(
-				"id"));
 		titleColumn.setCellValueFactory(new PropertyValueFactory<View, String>(
 				"title"));
 		genreColumn.setCellValueFactory(new PropertyValueFactory<View, String>(
@@ -119,8 +121,6 @@ public class Search extends AnchorPane implements Initializable {
 		buttonColumn
 				.setCellValueFactory(new PropertyValueFactory<View, String>(
 						"id"));
-
-		Detailed.setRorSFlag("s");
 	}
 
 	@FXML
@@ -201,4 +201,12 @@ public class Search extends AnchorPane implements Initializable {
 			System.out.println("Exception:" + e.getMessage());
 		}
 	}
+
+    /**
+     * Get Instance
+     */
+    public static Search getInstance() {
+        return instance;
+    }
+
 }

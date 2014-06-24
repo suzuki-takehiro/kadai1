@@ -10,7 +10,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="480.0" styleClass="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sqlite.Detailed">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="480.0" styleClass="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="readingManagement.Detailed">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -69,13 +69,13 @@
                <children>
                   <HBox prefHeight="25.0" prefWidth="190.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Button onAction="#onEdit" prefWidth="50.0" text="編集" />
+                        <Button defaultButton="true" onAction="#onEdit" prefWidth="50.0" text="編集" />
                         <Button onAction="#onDelete" prefWidth="50.0" text="削除">
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#close" prefWidth="50.0" text="戻る">
+                        <Button cancelButton="true" mnemonicParsing="false" onAction="#close" prefWidth="50.0" text="戻る">
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>

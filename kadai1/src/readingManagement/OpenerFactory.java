@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -103,7 +104,12 @@ class OpenerFactory implements
 							start, end, text);
 					Scene scene = new Scene(root);
 					Stage stage = new Stage();
-					stage.setTitle("Detailed");
+
+					//ウィンドウアイコン設定
+			        Image icon = new Image(getClass().getResourceAsStream("windowIcon.gif"));
+
+			        stage.setTitle("Detailed");
+			        stage.getIcons().addAll(icon);
 					stage.setScene(scene);
 					stage.setWidth(540);
 					stage.setHeight(280);

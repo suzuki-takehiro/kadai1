@@ -16,24 +16,17 @@ public class ConfirmationDialog implements Initializable {
 	@FXML
 	public Label label;
 
-	public String flag;
-
-	public String id;
-
-	public void setId(String setid) {
-		id = setid;
-	}
+	public String processType;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 	}
 
-	public void setFlag(String setflag) {
-		flag = setflag;
-		if (flag.equals("edit")) {
+	public void setProcessType(String type) {
+		processType = type;
+		if (processType.equals("edit")) {
 			label.setText("変更してもよろしいですか？");
-			System.out.println(id);
-		} else if (flag.equals("delete")) {
+		} else if (processType.equals("delete")) {
 			label.setText("削除してもよろしいですか？");
 		} else {
 			label.setText("エラーです。");
@@ -42,13 +35,13 @@ public class ConfirmationDialog implements Initializable {
 
 	@FXML
 	public void yes() {
-		Detailed.setYNFlag("yes");
+		Detailed.setButtonType("yes");
 		root.getScene().getWindow().hide();
 	}
 
 	@FXML
 	public void close() {
-		Detailed.setYNFlag("");
+		Detailed.setButtonType("");
 		root.getScene().getWindow().hide();
 	}
 

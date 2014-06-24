@@ -32,16 +32,16 @@
                   <Insets />
                </VBox.margin>
             </AnchorPane>
-            <AnchorPane minHeight="-Infinity" prefHeight="30.0" styleClass="content1">
+            <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" styleClass="content1">
                <children>
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label prefWidth="55.0" text="タイトル">
+                        <Label minWidth="-Infinity" prefWidth="50.0" text="タイトル">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin></Label>
                         <TextField fx:id="titleField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
-                        <Label prefWidth="55.0" text="ジャンル">
+                        <Label minWidth="-Infinity" prefWidth="50.0" text="ジャンル">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin></Label>
@@ -50,16 +50,16 @@
                   </HBox>
                </children>
             </AnchorPane>
-            <AnchorPane minHeight="-Infinity" prefHeight="30.0" styleClass="content1">
+            <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" styleClass="content1">
                <children>
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label prefWidth="55.0" text="著者">
+                        <Label minWidth="-Infinity" prefWidth="50.0" text="著者">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin></Label>
                         <TextField fx:id="writerField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
-                        <Label prefWidth="55.0" text="出版社">
+                        <Label minWidth="-Infinity" prefWidth="50.0" text="出版社">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin></Label>
@@ -68,23 +68,23 @@
                   </HBox>
                </children>
             </AnchorPane>
-            <AnchorPane minHeight="-Infinity" prefHeight="30.0" styleClass="content1" VBox.vgrow="ALWAYS">
+            <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" styleClass="content1" VBox.vgrow="ALWAYS">
                <children>
-                  <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+                  <HBox AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label prefWidth="55.0" text="期間">
+                        <Label minWidth="-Infinity" prefWidth="50.0" text="期間">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin></Label>
                         <DatePicker fx:id="startField" HBox.hgrow="ALWAYS" />
-                        <Label alignment="CENTER" prefWidth="55.0" text="～">
+                        <Label alignment="CENTER" prefWidth="50.0" text="～">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin></Label>
                         <DatePicker fx:id="endField" HBox.hgrow="ALWAYS" />
                         <AnchorPane HBox.hgrow="ALWAYS">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#search" prefWidth="50.0" text="検索" AnchorPane.rightAnchor="0.0" />
+                              <Button defaultButton="true" minWidth="-Infinity" mnemonicParsing="false" onAction="#search" prefWidth="50.0" text="検索" AnchorPane.rightAnchor="0.0" />
                            </children>
                            <HBox.margin>
                               <Insets left="5.0" />
@@ -94,17 +94,16 @@
                   </HBox>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="234.0" styleClass="content1" VBox.vgrow="ALWAYS">
+            <AnchorPane styleClass="content1" VBox.vgrow="ALWAYS">
                <children>
                   <VBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label prefWidth="150.0" text="検索結果">
+                        <Label minWidth="-Infinity" prefWidth="150.0" text="検索結果">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin></Label>
                         <TableView fx:id="table" minHeight="50.0" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                           <columns>
-                            <TableColumn fx:id="idColumn" text="id" />
                             <TableColumn fx:id="titleColumn" text="タイトル" />
                             <TableColumn fx:id="genreColumn" text="ジャンル" />
                             <TableColumn fx:id="writerColumn" text="著者" />

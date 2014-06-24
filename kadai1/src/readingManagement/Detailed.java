@@ -24,22 +24,6 @@ import javafx.stage.Stage;
 
 public class Detailed extends AnchorPane implements Initializable {
 
-	/*
-	 * public Detailed() {
-	 *
-	 * loadFXML(); }
-	 *
-	 * private void loadFXML() {
-	 *
-	 * FXMLLoader fxmlLoader = new FXMLLoader(
-	 * SubMain.class.getResource("detailed.fxml")); fxmlLoader.setRoot(this);
-	 *
-	 * // 自分自身をコントロールとして設定 fxmlLoader.setController(this);
-	 *
-	 * try { fxmlLoader.load(); } catch (IOException exception) { throw new
-	 * RuntimeException(exception); } }
-	 */
-
 	@FXML
 	private Pane root;
 
@@ -86,79 +70,76 @@ public class Detailed extends AnchorPane implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 	}
 
-	/*
-	 * @FXML protected void goEdit() { OpenerFactory.sendEdit(); }
-	 */
-
 	@FXML
 	public void close() {
 		root.getScene().getWindow().hide();
 	}
 
-	public String flag = "";
+	public String processType = "";
 
-	static String ynFlag = "";
+	static String ButtonType = "";
 
-	public static void setYNFlag(String ans) {
-		ynFlag = ans;
+	public static void setButtonType(String type) {
+		ButtonType = type;
 	};
 
-	static String RorSFlag = "";
+	static String ParentType = "";
 
-	public static void setRorSFlag(String ans) {
-		RorSFlag = ans;
+	public static void setParentType(String ans) {
+		ParentType = ans;
 	};
 
 	@FXML
 	public void onEdit() {
-		flag = "edit";
+		processType = "edit";
 		openDialog();
-		if (ynFlag.equals("yes")) {
+		if (ButtonType.equals("yes")) {
 			regist();
-			if(RorSFlag.equals("s")){
-				System.out.println("nnoo");
-				toSearch();
-				}else if(RorSFlag.equals("r")){
-					System.out.println("OOKK");
-					}
-			showDialog("r");
+			if (ParentType.equals("search")) {
+				Search.getInstance().search();
+			} else if (ParentType.equals("register")) {
+				Register.getInstance().ViewTable();
+			}
+			processType = "";
 		}
-	}
-
-	private void toSearch() {
-		Search a = new Search();
-		a.search();
-
 	}
 
 	@FXML
 	public void onDelete() {
-		flag = "delete";
+		processType = "delete";
 		openDialog();
-		if (ynFlag.equals("yes")) {
+		if (ButtonType.equals("yes")) {
 			delete();
-			showDialog("d");
+			if (ParentType.equals("search")) {
+				Search.getInstance().search();
+			} else if (ParentType.equals("register")) {
+				Register.getInstance().ViewTable();
+			}
+			showDialog("delete");
+			processType = "";
 			root.getScene().getWindow().hide();
 		}
 	}
 
+
+	//確認ダイアログ表示
 	public void openDialog() {
 
-		// 確認ダイアログ表示
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(
 				"confirmationDialog.fxml"));
 		try {
 			loader.load();
 		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 		ConfirmationDialog controller = loader.getController();
-		controller.setId(id);
-		controller.setFlag(flag);
+		controller.setProcessType(processType);
 		Parent root = loader.getRoot();
 		Scene scene = new Scene(root);
 		Stage stage2 = new Stage();
+
+		//ウィンドウアイコン設定
+        stage2.getIcons().addAll(Main.icon);
 
 		stage2.initOwner(Main.stage);
 		stage2.initModality(Modality.APPLICATION_MODAL);
@@ -166,12 +147,11 @@ public class Detailed extends AnchorPane implements Initializable {
 		stage2.setScene(scene);
 		stage2.setResizable(false);
 		stage2.showAndWait();
-		flag = "";
 	}
 
-	public void regist() {
 
-		// table.setItems(null);
+	//データ登録
+	public void regist() {
 
 		String getTitle = titleField.getText();
 
@@ -182,18 +162,25 @@ public class Detailed extends AnchorPane implements Initializable {
 		String getPublisher = publisherField.getText();
 
 		String getStart = "";
-		if (!(startField.getValue() == null)) {getStart = startField.getValue().toString();}
+		if (!(startField.getValue() == null)) {
+			getStart = startField.getValue().toString();
+		}
 
 		String getEnd = "";
-		if (!(endField.getValue() == null)) {getEnd = endField.getValue().toString();}
+		if (!(endField.getValue() == null)) {
+			getEnd = endField.getValue().toString();
+		}
 
 		String getText = textField.getText();
 
-		// System.out.println(getTitle);
+		int diff = getStart.compareTo(getEnd);
 
 		if (titleField.getText().matches(".+")
 				&& !(startField.getValue() == null)
 				&& !(endField.getValue() == null)) {
+			if (diff > 0) {
+				showDialog("periodErrer");
+				} else {
 			try {
 				// JDBCドライバーの指定
 				Class.forName("org.sqlite.JDBC");
@@ -217,11 +204,11 @@ public class Detailed extends AnchorPane implements Initializable {
 				stmt.close();
 
 			} catch (ClassNotFoundException e) {
-				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			} catch (SQLException e) {
-				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
+			}
+			showDialog("edit");
 			}
 
 		} else {
@@ -236,9 +223,9 @@ public class Detailed extends AnchorPane implements Initializable {
 				setText("終了期間 ");
 			}
 
-			ynFlag = "";
+			ButtonType = "";
 
-			showDialog("e");
+			showDialog("shortageError");
 
 		}
 	}
@@ -255,7 +242,6 @@ public class Detailed extends AnchorPane implements Initializable {
 			// Statementオブジェクト作成
 			Statement stmt = con.createStatement();
 
-			// 問合せ文
 			// 登録SQL
 			String sqlins = "delete from test where id = " + id + "";
 			stmt.executeUpdate(sqlins);
@@ -263,10 +249,8 @@ public class Detailed extends AnchorPane implements Initializable {
 			stmt.close();
 
 		} catch (ClassNotFoundException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 	}
@@ -296,16 +280,21 @@ public class Detailed extends AnchorPane implements Initializable {
 		Stage stage2 = new Stage();
 		stage2.initOwner(Main.stage);
 		stage2.initModality(Modality.APPLICATION_MODAL);
+		//ウィンドウアイコン設定
+        stage2.getIcons().addAll(Main.icon);
 
-		if(messageType.equals("e")){
+		if (messageType.equals("shortageError")) {
 			stage2.setTitle("Error");
 			error = error + "を入力してください。";
-		}else if(messageType.equals("r")){
+		} else if (messageType.equals("edit")) {
 			stage2.setTitle("Confirmation");
-			error = "登録しました。";
-		}else if(messageType.equals("d")){
+			error = "変更しました。";
+		} else if (messageType.equals("delete")) {
 			stage2.setTitle("Confirmation");
 			error = "削除しました。";
+		}else if (messageType.equals("periodErrer")) {
+			stage2.setTitle("Error");
+			error = "期間が正しくありません。";
 		}
 
 		ErrorDialog controller = loader.getController();

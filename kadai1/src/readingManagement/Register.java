@@ -30,6 +30,11 @@ public class Register extends AnchorPane implements Initializable {
 		loadFXML();
 	}
 
+    /**
+     * Main class instance
+     */
+    private static Register instance;
+
 	private void loadFXML() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
@@ -71,9 +76,6 @@ public class Register extends AnchorPane implements Initializable {
 	private TableView<View> table;
 
 	@FXML
-	private TableColumn<View, String> idColumn;
-
-	@FXML
 	private TableColumn<View, String> titleColumn;
 
 	@FXML
@@ -100,9 +102,8 @@ public class Register extends AnchorPane implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
-		// ViewクラスとRegisterクラスの対応付け
-		idColumn.setCellValueFactory(new PropertyValueFactory<View, String>(
-				"id"));
+        instance = this;// インスタンス
+
 		titleColumn.setCellValueFactory(new PropertyValueFactory<View, String>(
 				"title"));
 		genreColumn.setCellValueFactory(new PropertyValueFactory<View, String>(
@@ -123,13 +124,15 @@ public class Register extends AnchorPane implements Initializable {
 				.setCellValueFactory(new PropertyValueFactory<View, String>(
 						"id"));
 
-		Detailed.setRorSFlag("r");
-
 		ViewTable();
 
 	}
 
 	public void ViewTable() {
+
+		// テーブルの中身を削除
+		table.getItems().clear();
+
 		try {
 			buttonColumn.setCellFactory(new OpenerFactory());
 			// JDBCドライバーの指定
@@ -242,9 +245,6 @@ public class Register extends AnchorPane implements Initializable {
 							+ getEnd + "','" + getText + "')";
 					stmt.executeUpdate(sqlins);
 
-					// テーブルの中身を削除
-					table.getItems().clear();
-
 					num.close();
 					stmt.close();
 
@@ -296,6 +296,8 @@ public class Register extends AnchorPane implements Initializable {
 		Parent root = loader.getRoot();
 		Scene scene = new Scene(root);
 		Stage stage2 = new Stage();
+		//ウィンドウアイコン設定
+        stage2.getIcons().addAll(Main.icon);
 		stage2.initOwner(Main.stage);
 		stage2.initModality(Modality.APPLICATION_MODAL);
 
@@ -314,4 +316,12 @@ public class Register extends AnchorPane implements Initializable {
 		stage2.showAndWait();
 		error = "";
 	}
+
+    /**
+     * Get Instance
+     */
+    public static Register getInstance() {
+        return instance;
+    }
+
 }

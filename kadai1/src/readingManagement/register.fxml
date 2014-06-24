@@ -33,9 +33,9 @@
                <children>
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label prefWidth="55.0" text="タイトル" />
+                        <Label minWidth="-Infinity" prefWidth="50.0" text="タイトル" />
                         <TextField fx:id="titleField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
-                        <Label prefWidth="55.0" text="ジャンル" />
+                        <Label minWidth="-Infinity" prefWidth="50.0" text="ジャンル" />
                         <TextField fx:id="genreField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
@@ -45,9 +45,9 @@
                <children>
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label prefWidth="55.0" text="著者" />
+                        <Label minWidth="-Infinity" prefWidth="50.0" text="著者" />
                         <TextField fx:id="writerField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
-                        <Label prefWidth="55.0" text="出版社" />
+                        <Label minWidth="-Infinity" prefWidth="50.0" text="出版社" />
                         <TextField fx:id="publisherField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
@@ -57,9 +57,9 @@
                <children>
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label prefWidth="55.0" text="期間" />
+                        <Label minWidth="-Infinity" prefWidth="50.0" text="期間" />
                         <DatePicker fx:id="startField" HBox.hgrow="ALWAYS" />
-                        <Label alignment="CENTER" prefWidth="55.0" text="～" />
+                        <Label alignment="CENTER" prefWidth="50.0" text="～" />
                         <DatePicker fx:id="endField" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
@@ -75,9 +75,9 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="44.0" prefWidth="480.0">
+            <AnchorPane>
                <children>
-                  <Button layoutX="430.0" onAction="#regist" prefWidth="50.0" text="登録" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                  <Button defaultButton="true" layoutX="430.0" onAction="#regist" prefWidth="50.0" text="登録" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="162.0" prefWidth="600.0" styleClass="content1" VBox.vgrow="ALWAYS">
@@ -87,7 +87,6 @@
                         <Label prefWidth="150.0" text="最新登録10件" />
                         <TableView fx:id="table" fixedCellSize="0.0" minHeight="50.0" prefHeight="200.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
                           <columns>
-                            <TableColumn fx:id="idColumn" prefWidth="-1.0" text="id" />
                             <TableColumn fx:id="titleColumn" prefWidth="-1.0" text="タイトル" />
                             <TableColumn fx:id="genreColumn" prefWidth="-1.0" text="ジャンル" />
                             <TableColumn fx:id="writerColumn" prefWidth="-1.0" text="著者" />
