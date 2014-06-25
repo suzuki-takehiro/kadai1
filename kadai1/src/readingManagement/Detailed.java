@@ -27,6 +27,7 @@ public class Detailed extends AnchorPane implements Initializable {
 	@FXML
 	private Pane root;
 
+	// 現在表示している詳細情報元のID
 	private String id;
 
 	@FXML
@@ -75,14 +76,17 @@ public class Detailed extends AnchorPane implements Initializable {
 		root.getScene().getWindow().hide();
 	}
 
+	// Detailedウィンドウでの操作フラグ(edit/delete)
 	public String processType = "";
 
+	// ConfirmationDialogウィンドウでの操作フラグ取得(yes/"")
 	static String ButtonType = "";
 
 	public static void setButtonType(String type) {
 		ButtonType = type;
 	};
 
+	// 表示元ウィンドウの種類フラグ取得(search/regist)
 	static String ParentType = "";
 
 	public static void setParentType(String ans) {
@@ -95,10 +99,13 @@ public class Detailed extends AnchorPane implements Initializable {
 		openDialog();
 		if (ButtonType.equals("yes")) {
 			regist();
+
 			if (ParentType.equals("search")) {
 				Search.getInstance().search();
+
 			} else if (ParentType.equals("register")) {
 				Register.getInstance().ViewTable();
+
 			}
 			processType = "";
 		}
@@ -110,19 +117,20 @@ public class Detailed extends AnchorPane implements Initializable {
 		openDialog();
 		if (ButtonType.equals("yes")) {
 			delete();
+
 			if (ParentType.equals("search")) {
 				Search.getInstance().search();
+
 			} else if (ParentType.equals("register")) {
 				Register.getInstance().ViewTable();
+
 			}
-			showDialog("delete");
 			processType = "";
 			root.getScene().getWindow().hide();
 		}
 	}
 
-
-	//確認ダイアログ表示
+	// 確認ダイアログ表示
 	public void openDialog() {
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(
@@ -132,15 +140,15 @@ public class Detailed extends AnchorPane implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 		ConfirmationDialog controller = loader.getController();
 		controller.setProcessType(processType);
+
 		Parent root = loader.getRoot();
 		Scene scene = new Scene(root);
 		Stage stage2 = new Stage();
 
-		//ウィンドウアイコン設定
-        stage2.getIcons().addAll(Main.icon);
-
+		stage2.getIcons().addAll(Main.icon);
 		stage2.initOwner(Main.stage);
 		stage2.initModality(Modality.APPLICATION_MODAL);
 		stage2.setTitle("Confirmation");
@@ -149,30 +157,24 @@ public class Detailed extends AnchorPane implements Initializable {
 		stage2.showAndWait();
 	}
 
-
-	//データ登録
+	// データ登録
 	public void regist() {
 
 		String getTitle = titleField.getText();
-
 		String getGenre = genreField.getText();
-
 		String getWriter = writerField.getText();
-
 		String getPublisher = publisherField.getText();
-
 		String getStart = "";
 		if (!(startField.getValue() == null)) {
 			getStart = startField.getValue().toString();
 		}
-
 		String getEnd = "";
 		if (!(endField.getValue() == null)) {
 			getEnd = endField.getValue().toString();
 		}
-
 		String getText = textField.getText();
 
+		//開始期間と終了期間比較
 		int diff = getStart.compareTo(getEnd);
 
 		if (titleField.getText().matches(".+")
@@ -180,48 +182,45 @@ public class Detailed extends AnchorPane implements Initializable {
 				&& !(endField.getValue() == null)) {
 			if (diff > 0) {
 				showDialog("periodErrer");
-				} else {
-			try {
-				// JDBCドライバーの指定
-				Class.forName("org.sqlite.JDBC");
 
-				// データベースに接続する なければ作成される
-				Connection con = DriverManager
-						.getConnection("jdbc:sqlite:C:/SQLiteDB/test");
+			} else {
+				try {
+					// JDBCドライバーの指定
+					Class.forName("org.sqlite.JDBC");
 
-				// Statementオブジェクト作成
-				Statement stmt = con.createStatement();
+					// データベースに接続する なければ作成される
+					Connection con = DriverManager
+							.getConnection("jdbc:sqlite:src/SQLite/DB");
 
-				// 問合せ文
-				// 登録SQL
-				String sqlins = "update test set title = '" + getTitle
-						+ "' , genre = '" + getGenre + "' , writer = '"
-						+ getWriter + "' , publisher = '" + getPublisher
-						+ "' , start = '" + getStart + "' , end = '" + getEnd
-						+ "' , text = '" + getText + "' where id = " + id + "";
-				stmt.executeUpdate(sqlins);
+					// Statementオブジェクト作成
+					Statement stmt = con.createStatement();
 
-				stmt.close();
+					// 登録SQL
+					String sqlins = "update test set title = '" + getTitle
+							+ "' , genre = '" + getGenre + "' , writer = '"
+							+ getWriter + "' , publisher = '" + getPublisher
+							+ "' , start = '" + getStart + "' , end = '"
+							+ getEnd + "' , text = '" + getText
+							+ "' where id = " + id + "";
+					stmt.executeUpdate(sqlins);
+					stmt.close();
 
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			showDialog("edit");
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				showDialog("edit");
 			}
 
 		} else {
 
 			if (!(titleField.getText().matches(".+"))) {
-				setText("タイトル ");
-			}
+				setText("タイトル ");}
 			if ((startField.getValue() == null)) {
-				setText("開始期間 ");
-			}
+				setText("開始期間 ");}
 			if ((endField.getValue() == null)) {
-				setText("終了期間 ");
-			}
+				setText("終了期間 ");}
 
 			ButtonType = "";
 
@@ -237,7 +236,7 @@ public class Detailed extends AnchorPane implements Initializable {
 
 			// データベースに接続する なければ作成される
 			Connection con = DriverManager
-					.getConnection("jdbc:sqlite:C:/SQLiteDB/test");
+					.getConnection("jdbc:sqlite:src/SQLite/DB");
 
 			// Statementオブジェクト作成
 			Statement stmt = con.createStatement();
@@ -245,7 +244,6 @@ public class Detailed extends AnchorPane implements Initializable {
 			// 登録SQL
 			String sqlins = "delete from test where id = " + id + "";
 			stmt.executeUpdate(sqlins);
-
 			stmt.close();
 
 		} catch (ClassNotFoundException e) {
@@ -253,14 +251,14 @@ public class Detailed extends AnchorPane implements Initializable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		showDialog("delete");
 	}
 
 	// エラーダイアログ表示メッセージ
 	public static String error = "";
 
 	public void setText(String koumoku) {
-		error = error + koumoku;
-	}
+		error = error + koumoku;}
 
 	// メッセージダイアログ表示
 	public static void showDialog(String type) {
@@ -278,28 +276,31 @@ public class Detailed extends AnchorPane implements Initializable {
 		Parent root = loader.getRoot();
 		Scene scene = new Scene(root);
 		Stage stage2 = new Stage();
-		stage2.initOwner(Main.stage);
-		stage2.initModality(Modality.APPLICATION_MODAL);
-		//ウィンドウアイコン設定
-        stage2.getIcons().addAll(Main.icon);
 
 		if (messageType.equals("shortageError")) {
 			stage2.setTitle("Error");
 			error = error + "を入力してください。";
+
 		} else if (messageType.equals("edit")) {
 			stage2.setTitle("Confirmation");
 			error = "変更しました。";
+
 		} else if (messageType.equals("delete")) {
 			stage2.setTitle("Confirmation");
 			error = "削除しました。";
-		}else if (messageType.equals("periodErrer")) {
+
+		} else if (messageType.equals("periodErrer")) {
 			stage2.setTitle("Error");
 			error = "期間が正しくありません。";
+
 		}
 
 		ErrorDialog controller = loader.getController();
 		controller.setMessage(error);
 
+		stage2.initOwner(Main.stage);
+		stage2.initModality(Modality.APPLICATION_MODAL);
+		stage2.getIcons().addAll(Main.icon);
 		stage2.setScene(scene);
 		stage2.setResizable(false);
 		stage2.showAndWait();

@@ -161,7 +161,7 @@ public class Search extends AnchorPane implements Initializable {
 
 			// データベースに接続する なければ作成される
 			Connection con = DriverManager
-					.getConnection("jdbc:sqlite:C:/SQLiteDB/test");
+					.getConnection("jdbc:sqlite:src/SQLite/DB");
 
 			// Statementオブジェクト作成
 			Statement stmt = con.createStatement();

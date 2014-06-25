@@ -30,9 +30,7 @@ public class Register extends AnchorPane implements Initializable {
 		loadFXML();
 	}
 
-    /**
-     * Main class instance
-     */
+	// ＊Registerクラスインスタンス
     private static Register instance;
 
 	private void loadFXML() {
@@ -102,7 +100,8 @@ public class Register extends AnchorPane implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
-        instance = this;// インスタンス
+		// ＊インスタンス設定
+		instance = this;
 
 		titleColumn.setCellValueFactory(new PropertyValueFactory<View, String>(
 				"title"));
@@ -123,9 +122,7 @@ public class Register extends AnchorPane implements Initializable {
 		buttonColumn
 				.setCellValueFactory(new PropertyValueFactory<View, String>(
 						"id"));
-
 		ViewTable();
-
 	}
 
 	public void ViewTable() {
@@ -135,12 +132,13 @@ public class Register extends AnchorPane implements Initializable {
 
 		try {
 			buttonColumn.setCellFactory(new OpenerFactory());
+
 			// JDBCドライバーの指定
 			Class.forName("org.sqlite.JDBC");
 
 			// データベースに接続する なければ作成される
 			Connection con = DriverManager
-					.getConnection("jdbc:sqlite:C:/SQLiteDB/test");
+					.getConnection("jdbc:sqlite:src/SQLite/DB");
 
 			// Statementオブジェクト作成
 			Statement stmt = con.createStatement();
@@ -165,7 +163,6 @@ public class Register extends AnchorPane implements Initializable {
 						new View(id, title, genre, writer, publisher, start,
 								end, text));
 			}
-
 			rs.close();
 			stmt.close();
 
@@ -176,7 +173,6 @@ public class Register extends AnchorPane implements Initializable {
 		} catch (Exception e) {
 			System.out.println("Exception:" + e.getMessage());
 		}
-
 	}
 
 	@FXML
@@ -193,32 +189,28 @@ public class Register extends AnchorPane implements Initializable {
 	public void regist() {
 
 		String getTitle = titleField.getText();
-
 		String getGenre = genreField.getText();
-
 		String getWriter = writerField.getText();
-
 		String getPublisher = publisherField.getText();
-
 		String getStart = "";
 		if (!(startField.getValue() == null)) {
 			getStart = startField.getValue().toString();
 		}
-
 		String getEnd = "";
 		if (!(endField.getValue() == null)) {
 			getEnd = endField.getValue().toString();
 		}
-
 		String getText = textField.getText();
 
+		//開始期間と終了期間比較
 		int diff = getStart.compareTo(getEnd);
 
 		if (titleField.getText().matches(".+")
 				&& !(startField.getValue() == null)
 				&& !(endField.getValue() == null)) {
 			if (diff > 0) {
-				showDialog("eb");
+				showDialog("periodErrer");
+
 			} else {
 				try {
 					buttonColumn.setCellFactory(new OpenerFactory());
@@ -228,7 +220,7 @@ public class Register extends AnchorPane implements Initializable {
 
 					// データベースに接続する なければ作成される
 					Connection con = DriverManager
-							.getConnection("jdbc:sqlite:C:/SQLiteDB/test");
+							.getConnection("jdbc:sqlite:src/SQLite/DB");
 
 					// Statementオブジェクト作成
 					Statement stmt = con.createStatement();
@@ -243,8 +235,8 @@ public class Register extends AnchorPane implements Initializable {
 							+ getTitle + "','" + getGenre + "','" + getWriter
 							+ "','" + getPublisher + "','" + getStart + "','"
 							+ getEnd + "','" + getText + "')";
-					stmt.executeUpdate(sqlins);
 
+					stmt.executeUpdate(sqlins);
 					num.close();
 					stmt.close();
 
@@ -259,16 +251,13 @@ public class Register extends AnchorPane implements Initializable {
 		} else {
 
 			if (!(titleField.getText().matches(".+"))) {
-				setText("タイトル ");
-			}
+				setText("タイトル ");}
 			if ((startField.getValue() == null)) {
-				setText("開始期間 ");
-			}
+				setText("開始期間 ");}
 			if ((endField.getValue() == null)) {
-				setText("終了期間 ");
-			}
+				setText("終了期間 ");}
 
-			showDialog("ea");
+			showDialog("shortageError");
 
 		}
 	}
@@ -301,10 +290,12 @@ public class Register extends AnchorPane implements Initializable {
 		stage2.initOwner(Main.stage);
 		stage2.initModality(Modality.APPLICATION_MODAL);
 
-		if (messageType.equals("ea")) {
+		if (messageType.equals("shortageError")) {
 			error = error + "を入力してください。";
+
 		} else if (messageType.equals("eb")) {
 			error = "期間が正しくありません。";
+
 		}
 
 		ErrorDialog controller = loader.getController();
@@ -316,10 +307,7 @@ public class Register extends AnchorPane implements Initializable {
 		stage2.showAndWait();
 		error = "";
 	}
-
-    /**
-     * Get Instance
-     */
+	// ＊インスタンス取得
     public static Register getInstance() {
         return instance;
     }

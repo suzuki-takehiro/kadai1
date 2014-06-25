@@ -8,36 +8,25 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-	/**
-	 * Main class instance
-	 */
+	// ＊Mainクラスインスタンス
 	private static Main instance;
 
-	/**
-	 * ステージ
-	 */
 	public static Stage stage;
 
-	static// ウィンドウアイコン設定
-	Image icon = new Image(Main.class.getResourceAsStream("windowIcon.gif"));
+	// ウィンドウアイコン設定
+	static Image icon = new Image(
+			Main.class.getResourceAsStream("windowIcon.gif"));
 
 	public void start(Stage primaryStage) throws Exception {
-		/*
-		 * AnchorPane main =
-		 * FXMLLoader.load(Main.class.getResource("search.fxml"));
-		 *
-		 * stage.setTitle("ReadingManagement"); stage.setScene(new Scene(main,
-		 * 480, 360)); stage.show();
-		 */
 
-		// インスタンス
+		// ＊インスタンス設定
 		instance = this;
 
 		// ステージの設定
 		stage = primaryStage;
 		stage.getIcons().addAll(icon);
 		stage.setTitle("ReadingManagement");
-		stage.setWidth(480);
+		stage.setWidth(508);
 		stage.setHeight(480);
 
 		// Searchに遷移
@@ -67,18 +56,9 @@ public class Main extends Application {
 		this.replaceSceneContent(controller);
 	}
 
-	// ページ遷移Detailed
-	/*
-	 * public void sendDetailed() {
-	 *
-	 * Detailed controller = new Detailed();
-	 * this.replaceSceneContent(controller); }
-	 */
-
-	/**
-	 * シーンの変更
-	 */
+	// シーン変更
 	private void replaceSceneContent(Parent controller) {
+
 		Scene scene = stage.getScene();
 		if (scene == null) {
 			scene = new Scene(controller);
@@ -88,10 +68,9 @@ public class Main extends Application {
 		}
 	}
 
-	/**
-	 * Get Instance
-	 */
+	// ＊インスタンス取得
 	public static Main getInstance() {
+
 		return instance;
 	}
 }

@@ -17,7 +17,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -67,7 +66,7 @@ class OpenerFactory implements
 
 					// データベースに接続する なければ作成される
 					Connection con = DriverManager
-							.getConnection("jdbc:sqlite:C:/SQLiteDB/test");
+							.getConnection("jdbc:sqlite:src/SQLite/DB");
 
 					// Statementオブジェクト作成
 					Statement stmt = con.createStatement();
@@ -105,11 +104,8 @@ class OpenerFactory implements
 					Scene scene = new Scene(root);
 					Stage stage = new Stage();
 
-					//ウィンドウアイコン設定
-			        Image icon = new Image(getClass().getResourceAsStream("windowIcon.gif"));
-
 			        stage.setTitle("Detailed");
-			        stage.getIcons().addAll(icon);
+			        stage.getIcons().addAll(Main.icon);
 					stage.setScene(scene);
 					stage.setWidth(540);
 					stage.setHeight(280);
