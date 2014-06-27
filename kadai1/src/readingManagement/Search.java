@@ -2,11 +2,6 @@ package readingManagement;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -26,10 +21,10 @@ public class Search extends AnchorPane implements Initializable {
 		loadFXML();
 	}
 
-    /**
-     * Main class instance
-     */
-    private static Search instance;
+	/**
+	 * Searchクラスインスタンス
+	 */
+	private static Search instance;
 
 	private void loadFXML() {
 
@@ -98,8 +93,10 @@ public class Search extends AnchorPane implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
-        // インスタンス
-        instance = this;
+		/**
+		 * インスタンス
+		 */
+		instance = this;
 
 		// ViewクラスとSearchクラスの対応付け
 		titleColumn.setCellValueFactory(new PropertyValueFactory<View, String>(
@@ -136,10 +133,6 @@ public class Search extends AnchorPane implements Initializable {
 	@FXML
 	public void search() {
 
-		table.getItems().clear();
-
-		buttonColumn.setCellFactory(new OpenerFactory());
-
 		String getTitle = titleField.getText();
 
 		String getGenre = genreField.getText();
@@ -149,64 +142,26 @@ public class Search extends AnchorPane implements Initializable {
 		String getPublisher = publisherField.getText();
 
 		String getStart = "";
-		if (!(startField.getValue() == null)) {getStart = startField.getValue().toString();}
+		if (!(startField.getValue() == null)) {
+			getStart = startField.getValue().toString();
+		}
 
 		String getEnd = "";
-		if (!(endField.getValue() == null)) {getEnd = endField.getValue().toString();}
-
-		try {
-
-			// JDBCドライバーの指定
-			Class.forName("org.sqlite.JDBC");
-
-			// データベースに接続する なければ作成される
-			Connection con = DriverManager
-					.getConnection("jdbc:sqlite:src/SQLite/DB");
-
-			// Statementオブジェクト作成
-			Statement stmt = con.createStatement();
-
-			// 問合せ文
-			String sql = "select * from test where title like '%" + getTitle
-					+ "%' and genre like '%" + getGenre
-					+ "%' and writer like '%" + getWriter
-					+ "%' and publisher like '%" + getPublisher
-					+ "%' and start like '%" + getStart + "%' and end like '%"
-					+ getEnd + "%'";
-			ResultSet rs = stmt.executeQuery(sql);
-
-			// データ表示
-			while (rs.next()) {
-				String id = rs.getString("id");
-				String title = rs.getString("title");
-				String genre = rs.getString("genre");
-				String writer = rs.getString("writer");
-				String publisher = rs.getString("publisher");
-				String start = rs.getString("start");
-				String end = rs.getString("end");
-				String text = rs.getString("text");
-				table.getItems().add(
-						new View(id, title, genre, writer, publisher, start,
-								end, text));
-			}
-
-			rs.close();
-			stmt.close();
-
-		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundException:" + e.getMessage());
-		} catch (SQLException e) {
-			System.out.println("SQLException:" + e.getMessage());
-		} catch (Exception e) {
-			System.out.println("Exception:" + e.getMessage());
+		if (!(endField.getValue() == null)) {
+			getEnd = endField.getValue().toString();
 		}
+
+		DBAccess.search(table, buttonColumn, getTitle, getGenre, getWriter,
+				getPublisher, getStart, getEnd);
 	}
 
-    /**
-     * Get Instance
-     */
-    public static Search getInstance() {
-        return instance;
-    }
+	/**
+	 * Searchインスタンス取得
+	 *
+	 * @return:instance
+	 */
+	public static Search getInstance() {
+		return instance;
+	}
 
 }

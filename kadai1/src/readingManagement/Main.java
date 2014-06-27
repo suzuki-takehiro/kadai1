@@ -8,7 +8,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-	// ＊Mainクラスインスタンス
+	/**
+	 * Mainクラスインスタンス
+	 */
 	private static Main instance;
 
 	public static Stage stage;
@@ -19,7 +21,9 @@ public class Main extends Application {
 
 	public void start(Stage primaryStage) throws Exception {
 
-		// ＊インスタンス設定
+		/**
+		 * インスタンス設定
+		 */
 		instance = this;
 
 		// ステージの設定
@@ -40,23 +44,31 @@ public class Main extends Application {
 		launch(args);
 	}
 
-	// ページ遷移Register
+	/**
+	 * ページ遷移Register
+	 */
 	public void sendRegister() {
 
 		Register controller = new Register();
-		Detailed.setParentType("register");
+		Detailed.setParentType(false);
 		this.replaceSceneContent(controller);
 	}
 
-	// ページ遷移Search
+	/**
+	 * ページ遷移Search
+	 */
 	public void sendSearch() {
 
 		Search controller = new Search();
-		Detailed.setParentType("search");
+		Detailed.setParentType(true);
 		this.replaceSceneContent(controller);
 	}
 
-	// シーン変更
+	/**
+	 * シーン変更
+	 *
+	 * @param controller
+	 */
 	private void replaceSceneContent(Parent controller) {
 
 		Scene scene = stage.getScene();
@@ -68,7 +80,11 @@ public class Main extends Application {
 		}
 	}
 
-	// ＊インスタンス取得
+	/**
+	 * Mainインスタンス取得
+	 *
+	 * @return:instance
+	 */
 	public static Main getInstance() {
 
 		return instance;

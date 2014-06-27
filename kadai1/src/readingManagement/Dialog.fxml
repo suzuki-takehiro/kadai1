@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="readingManagement.ConfirmationDialog">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="readingManagement.Dialog">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -18,8 +18,8 @@
                <children>
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="30.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
-                        <Button defaultButton="true" onAction="#yes" prefWidth="50.0" text="はい" />
-                        <Button cancelButton="true" onAction="#close" prefWidth="50.0" text="いいえ">
+                        <Button defaultButton="true" fx:id="yesButton" onAction="#yesButton" prefWidth="50.0" text="はい" />
+                        <Button cancelButton="true" fx:id="noButton" onAction="#noButton" prefWidth="50.0" text="いいえ">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>

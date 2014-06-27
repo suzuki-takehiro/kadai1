@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: readingManagement.Main
+Class-Path: src/SQLite/sqlite-jdbc-3.7.15-M1.jar
+

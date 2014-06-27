@@ -1,11 +1,6 @@
 package readingManagement;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 
 import javafx.event.ActionEvent;
@@ -61,33 +56,17 @@ class OpenerFactory implements
 
 			public void openDialog() {
 				try {
-					// JDBCドライバーの指定
-					Class.forName("org.sqlite.JDBC");
 
-					// データベースに接続する なければ作成される
-					Connection con = DriverManager
-							.getConnection("jdbc:sqlite:src/SQLite/DB");
-
-					// Statementオブジェクト作成
-					Statement stmt = con.createStatement();
-
-					// sql文作成
-					String sql = "select * from test where id = " + id + "";
-
-					// sql問合せ
-					ResultSet rs = stmt.executeQuery(sql);
+					View view = DBAccess.getData(id);
 
 					// Detailed表示データ取得
-					String title = rs.getString("title");
-					String genre = rs.getString("genre");
-					String writer = rs.getString("writer");
-					String publisher = rs.getString("publisher");
-					LocalDate start = LocalDate.parse(rs.getString("start"));
-					LocalDate end = LocalDate.parse(rs.getString("end"));
-					String text = rs.getString("text");
-
-					rs.close();
-					stmt.close();
+					String title = view.getTitle();
+					String genre = view.getGenre();
+					String writer = view.getWriter();
+					String publisher = view.getPublisher();
+					LocalDate start = LocalDate.parse(view.getStart());
+					LocalDate end = LocalDate.parse(view.getEnd());
+					String text = view.getText();
 
 					// Detailedウィンドウ表示
 					FXMLLoader loader = new FXMLLoader(getClass().getResource(
@@ -104,8 +83,8 @@ class OpenerFactory implements
 					Scene scene = new Scene(root);
 					Stage stage = new Stage();
 
-			        stage.setTitle("Detailed");
-			        stage.getIcons().addAll(Main.icon);
+					stage.setTitle("Detailed");
+					stage.getIcons().addAll(Main.icon);
 					stage.setScene(scene);
 					stage.setWidth(540);
 					stage.setHeight(280);
@@ -113,11 +92,6 @@ class OpenerFactory implements
 					stage.initModality(Modality.WINDOW_MODAL);
 					stage.showAndWait();
 
-				} catch (ClassNotFoundException e) {
-					System.out.println("ClassNotFoundException:"
-							+ e.getMessage());
-				} catch (SQLException e) {
-					System.out.println("SQLException:" + e.getMessage());
 				} catch (Exception e) {
 					System.out.println("Exception:" + e.getMessage());
 				}
