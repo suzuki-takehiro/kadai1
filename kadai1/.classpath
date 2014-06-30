@@ -3,6 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="META-INF"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre8"/>
-	<classpathentry kind="lib" path="C:/Users/Owner/git/kadai1/kadai1/src/SQLite/sqlite-jdbc-3.7.15-M1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/Owner/git/kadai1/kadai1/src/SQLite/sqlite-jdbc-3.7.15-M1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -37,7 +37,7 @@ public class DialogController implements Initializable {
 	public static void showDialog(DialogType type) {
 
 		FXMLLoader loader = new FXMLLoader(
-				Register.class.getResource("Dialog.fxml"));
+				Register.class.getResource("dialog.fxml"));
 		try {
 			loader.load();
 		} catch (IOException e) {
