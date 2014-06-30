@@ -14,6 +14,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 public class Search extends AnchorPane implements Initializable {
 
@@ -41,6 +42,9 @@ public class Search extends AnchorPane implements Initializable {
 			throw new RuntimeException(exception);
 		}
 	}
+
+	@FXML
+	private Pane root;
 
 	@FXML
 	private TextField titleField;
@@ -128,6 +132,11 @@ public class Search extends AnchorPane implements Initializable {
 	@FXML
 	protected void goRegister() {
 		Main.getInstance().sendRegister();
+	}
+
+	@FXML
+	protected void close() {
+		root.getScene().getWindow().hide();
 	}
 
 	@FXML

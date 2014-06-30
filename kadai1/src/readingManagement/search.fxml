@@ -10,7 +10,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<fx:root prefHeight="360.0" prefWidth="480.0" styleClass="root" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="root" prefHeight="360.0" prefWidth="480.0" styleClass="root" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -22,6 +22,11 @@
                         <Label alignment="CENTER" onMouseClicked="#goRegister" prefHeight="25.0" prefWidth="50.0" styleClass="offtabButton" text="登録" />
                      </children>
                   </HBox>
+                  <AnchorPane prefHeight="25.0" AnchorPane.rightAnchor="0.0">
+                     <children>
+                        <Label alignment="CENTER" onMouseClicked="#close" prefHeight="25.0" prefWidth="50.0" styleClass="offtabButton" text="終了" />
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
             <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" styleClass="content1">

@@ -1,42 +1,46 @@
 @CHARSET "UTF-8";
 
-.root{
+.root {
 	-fx-background-color: linear-gradient(#ddd, #aaa);
 	-fx-font-size: 12px;
 }
 
-.content1{
+.content1 {
 	-fx-font-size: 12px;
 }
 
-.label{
+.label {
 	-fx-padding: 4, 0, 0, 0;
 }
 
-.ontabButton{
+.ontabButton {
 	-fx-text-fill: #333;
 	-fx-background-color: linear-gradient(#ddd, #ddd);
 	-fx-background-radius: 0, 0 0 0 0;
 }
 
-.ontabButton:hover{
+.ontabButton:hover {
 	-fx-text-fill: #999;
 	-fx-background-color: linear-gradient(#fff, #eee);
 	-fx-background-radius: 0, 0 0 0 0;
 }
 
-.offtabButton{
+.offtabButton {
 	-fx-text-fill: #fff;
 	-fx-background-color: linear-gradient(#443, #221);
 	-fx-background-radius: 0, 0 0 0 0;
 }
 
-.offtabButton:hover{
+.offtabButton:hover {
 	-fx-text-fill: #fff;
 	-fx-background-color: linear-gradient(#aa9, #665);
 	-fx-background-radius: 0, 0 0 0 0;
 }
 
-.tabBack{
+.tabBack {
 	-fx-background-color: linear-gradient(#443, #221);
+}
+
+.hissu {
+	-fx-text-fill: #f00
 }

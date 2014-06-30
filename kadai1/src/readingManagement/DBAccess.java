@@ -21,6 +21,9 @@ public class DBAccess {
 		if (!(title.matches(".+")) || start == "" || end == "") {
 			DialogController.showDialog(DialogType.shortageError);
 			return false;
+		} else if (title.matches("^\\s*\\s$")) {
+			DialogController.showDialog(DialogType.titleError);
+			return false;
 		} else if (diff > 0) {
 			DialogController.showDialog(DialogType.periodError);
 			return false;

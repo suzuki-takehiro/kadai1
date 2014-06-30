@@ -14,6 +14,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 public class Register extends AnchorPane implements Initializable {
 
@@ -41,6 +42,9 @@ public class Register extends AnchorPane implements Initializable {
 			throw new RuntimeException(exception);
 		}
 	}
+
+	@FXML
+	private Pane root;
 
 	@FXML
 	private TextField titleField;
@@ -131,7 +135,14 @@ public class Register extends AnchorPane implements Initializable {
 	}
 
 	@FXML
+	protected void close() {
+		root.getScene().getWindow().hide();
+	}
+
+	@FXML
 	public void regist() {
+
+		DialogController.setParentType(true);
 
 		String getTitle = titleField.getText();
 		String getGenre = genreField.getText();

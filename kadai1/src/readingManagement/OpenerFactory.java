@@ -21,6 +21,8 @@ import javafx.util.Callback;
 class OpenerFactory implements
 		Callback<TableColumn<View, String>, TableCell<View, String>> {
 
+	public static Stage stage;
+
 	@Override
 	public TableCell<View, String> call(TableColumn<View, String> param) {
 		TableCell<View, String> tableCell = new TableCell<View, String>() {
@@ -55,6 +57,7 @@ class OpenerFactory implements
 			}
 
 			public void openDialog() {
+				DialogController.setParentType(false);
 				try {
 
 					View view = DBAccess.getData(id);
@@ -81,13 +84,15 @@ class OpenerFactory implements
 					controller.setStates(id, title, genre, writer, publisher,
 							start, end, text);
 					Scene scene = new Scene(root);
-					Stage stage = new Stage();
+					stage = new Stage();
 
 					stage.setTitle("Detailed");
 					stage.getIcons().addAll(Main.icon);
 					stage.setScene(scene);
 					stage.setWidth(540);
 					stage.setHeight(280);
+					stage.setX(Main.stage.getX() + (Main.stage.getWidth() - stage.getWidth())/2);
+					stage.setY(Main.stage.getY() + (Main.stage.getHeight() - stage.getHeight())/2);
 					stage.initOwner(Main.stage);
 					stage.initModality(Modality.WINDOW_MODAL);
 					stage.showAndWait();

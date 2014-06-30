@@ -10,7 +10,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="480.0" styleClass="root" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="480.0" styleClass="root" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -22,6 +22,11 @@
                         <Label alignment="CENTER" onMouseClicked="#goRegister" prefHeight="25.0" prefWidth="50.0" styleClass="ontabButton" text="登録" />
                      </children>
                   </HBox>
+                  <AnchorPane prefHeight="25.0" AnchorPane.rightAnchor="0.0">
+                     <children>
+                        <Label alignment="CENTER" onMouseClicked="#close" prefHeight="25.0" prefWidth="50.0" styleClass="offtabButton" text="終了" />
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
             <AnchorPane minHeight="-Infinity" prefHeight="30.0" styleClass="content1">
@@ -33,9 +38,10 @@
                <children>
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label minWidth="-Infinity" prefWidth="50.0" text="タイトル" />
+                        <Label minWidth="-Infinity" prefWidth="45.0" text="タイトル" />
+                        <Label minWidth="-Infinity" prefWidth="45.0" text="※必須" styleClass="hissu"/>
                         <TextField fx:id="titleField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
-                        <Label minWidth="-Infinity" prefWidth="50.0" text="ジャンル" />
+                        <Label minWidth="-Infinity" prefWidth="45.0" text="ジャンル" />
                         <TextField fx:id="genreField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
@@ -45,9 +51,9 @@
                <children>
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label minWidth="-Infinity" prefWidth="50.0" text="著者" />
+                        <Label minWidth="-Infinity" prefWidth="90.0" text="著者" />
                         <TextField fx:id="writerField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
-                        <Label minWidth="-Infinity" prefWidth="50.0" text="出版社" />
+                        <Label minWidth="-Infinity" prefWidth="45.0" text="出版社" />
                         <TextField fx:id="publisherField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
@@ -57,9 +63,10 @@
                <children>
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label minWidth="-Infinity" prefWidth="50.0" text="期間" />
+                        <Label minWidth="-Infinity" prefWidth="45.0" text="期間" />
+                        <Label minWidth="-Infinity" prefWidth="45.0" text="※必須" styleClass="hissu"/>
                         <DatePicker fx:id="startField" HBox.hgrow="ALWAYS" />
-                        <Label alignment="CENTER" prefWidth="50.0" text="～" />
+                        <Label alignment="CENTER" minWidth="-Infinity" prefWidth="45.0" text="～" />
                         <DatePicker fx:id="endField" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
