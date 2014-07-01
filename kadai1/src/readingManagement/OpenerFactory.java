@@ -56,6 +56,7 @@ class OpenerFactory implements
 				}
 			}
 
+			// Detailedウィンドウ表示
 			public void openDialog() {
 				DialogController.setParentType(false);
 				try {
@@ -71,7 +72,6 @@ class OpenerFactory implements
 					LocalDate end = LocalDate.parse(view.getEnd());
 					String text = view.getText();
 
-					// Detailedウィンドウ表示
 					FXMLLoader loader = new FXMLLoader(getClass().getResource(
 							"detailed.fxml"));
 					try {
@@ -91,8 +91,13 @@ class OpenerFactory implements
 					stage.setScene(scene);
 					stage.setWidth(540);
 					stage.setHeight(280);
-					stage.setX(Main.stage.getX() + (Main.stage.getWidth() - stage.getWidth())/2);
-					stage.setY(Main.stage.getY() + (Main.stage.getHeight() - stage.getHeight())/2);
+
+					// ダイアログ表示位置調整
+					stage.setX(Main.stage.getX()
+							+ (Main.stage.getWidth() - stage.getWidth()) / 2);
+					stage.setY(Main.stage.getY()
+							+ (Main.stage.getHeight() - stage.getHeight()) / 2);
+
 					stage.initOwner(Main.stage);
 					stage.initModality(Modality.WINDOW_MODAL);
 					stage.showAndWait();

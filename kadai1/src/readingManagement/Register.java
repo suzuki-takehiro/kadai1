@@ -135,6 +135,7 @@ public class Register extends AnchorPane implements Initializable {
 	}
 
 	@FXML
+	//ウィンドウを閉じる
 	protected void close() {
 		root.getScene().getWindow().hide();
 	}

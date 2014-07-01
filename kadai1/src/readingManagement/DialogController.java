@@ -14,11 +14,11 @@ import javafx.stage.Stage;
 public class DialogController implements Initializable {
 
 	enum DialogType {
-		titleError, periodError, shortageError, edit, delete, confirmationEdit, confirmationDelete;
+		titleError, periodError, shortageError, edit, delete, regist, confirmationEdit, confirmationDelete;
 	}
 
 	/**
-	 * Dialog表示元判別フラグ
+	 * Dialog表示元判別フラグ 表示元Regiter = true / 表示元Detailed = false
 	 */
 	static boolean ParentType;
 
@@ -31,8 +31,8 @@ public class DialogController implements Initializable {
 	}
 
 	/**
-	 * ダイアログ表示 引数 titleError, periodError, shortageError, edit, delete, confirmationEdit,
-	 * confirmationDelete;
+	 * ダイアログ表示 引数 itleError, periodError, shortageError, edit, delete, regist,
+	 * confirmationEdit, confirmationDelete;
 	 */
 	public static void showDialog(DialogType type) {
 
@@ -67,14 +67,20 @@ public class DialogController implements Initializable {
 			Dialog.getInstance().visibleButton();
 			break;
 
+		case regist:
+			stage2.setTitle("confirmation");
+			Dialog.getInstance().setLabelText("登録しました。");
+			Dialog.getInstance().visibleButton();
+			break;
+
 		case edit:
-			stage2.setTitle("Error");
+			stage2.setTitle("confirmation");
 			Dialog.getInstance().setLabelText("変更しました。");
 			Dialog.getInstance().visibleButton();
 			break;
 
 		case delete:
-			stage2.setTitle("Error");
+			stage2.setTitle("confirmation");
 			Dialog.getInstance().setLabelText("削除しました。");
 			Dialog.getInstance().visibleButton();
 			break;
@@ -95,9 +101,7 @@ public class DialogController implements Initializable {
 		stage2.setWidth(270);
 		stage2.setHeight(90);
 
-		/**
-		 * ダイアログ表示位置調整
-		 */
+		// ダイアログ表示位置調整
 		if (ParentType) {
 			stage2.setX(Main.stage.getX()
 					+ (Main.stage.getWidth() - stage2.getWidth()) / 2);

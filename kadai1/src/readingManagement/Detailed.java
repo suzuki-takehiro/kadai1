@@ -41,6 +41,17 @@ public class Detailed extends AnchorPane implements Initializable {
 	@FXML
 	private TextArea textField;
 
+	/**
+	 * Detailed表示レコードデータセット
+	 * @param setid
+	 * @param title
+	 * @param genre
+	 * @param writer
+	 * @param publisher
+	 * @param start
+	 * @param end
+	 * @param text
+	 */
 	public void setStates(String setid, String title, String genre,
 			String writer, String publisher, LocalDate start, LocalDate end,
 			String text) {
@@ -58,6 +69,9 @@ public class Detailed extends AnchorPane implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 	}
 
+	/**
+	 * ウィンドウを閉じる
+	 */
 	@FXML
 	public void close() {
 		root.getScene().getWindow().hide();
@@ -65,6 +79,8 @@ public class Detailed extends AnchorPane implements Initializable {
 
 	/**
 	 * Detailed表示元判別フラグ
+	 * 表示元Search = true /
+	 * 表示元Register = false
 	 */
 	static boolean ParentType;
 
@@ -107,6 +123,12 @@ public class Detailed extends AnchorPane implements Initializable {
 		}
 	}
 
+	/**
+	 * DBレコード更新中継
+	 * DBAccess.upDateのbooleanを返す
+	 * 更新に成功 = true /
+	 * 更新に失敗 = false
+	 */
 	public boolean edit() {
 		String getTitle = titleField.getText();
 		String getGenre = genreField.getText();

@@ -14,6 +14,8 @@ public class DBAccess {
 
 	/**
 	 * 登録、更新入力値チェック
+	 *
+	 * @return true/false
 	 */
 	static int diff = 0;
 
@@ -21,14 +23,18 @@ public class DBAccess {
 		if (!(title.matches(".+")) || start == "" || end == "") {
 			DialogController.showDialog(DialogType.shortageError);
 			return false;
+
 		} else if (title.matches("^\\s*\\s$")) {
 			DialogController.showDialog(DialogType.titleError);
 			return false;
+
 		} else if (diff > 0) {
 			DialogController.showDialog(DialogType.periodError);
 			return false;
+
 		} else {
 			return true;
+
 		}
 
 	}
@@ -38,24 +44,18 @@ public class DBAccess {
 	 */
 	public static void regist(String title, String genre, String writer,
 			String publisher, String start, String end, String text) {
+
 		diff = start.compareTo(end);
+
 		if (comparison(title, start, end)) {
 			try {
-
-				// JDBCドライバーの指定
-				Class.forName("org.sqlite.JDBC");
-
-				// データベースに接続する なければ作成される
-				Connection con = DriverManager
-						.getConnection("jdbc:sqlite:src/SQLite/DB");
-
 				// Statementオブジェクト作成
-				Statement stmt = con.createStatement();
+				Statement stmt = createStatement();
 
 				// 最大ID取得SQL
 				String sqlcount = "select max(id) from test";
-				ResultSet num = stmt.executeQuery(sqlcount);
-				String numId = Integer.toString(num.getInt("max(id)") + 1);
+				ResultSet rs = stmt.executeQuery(sqlcount);
+				String numId = Integer.toString(rs.getInt("max(id)") + 1);
 
 				// 登録SQL
 				String sqlins = "insert into test values(" + numId + ",'"
@@ -64,15 +64,14 @@ public class DBAccess {
 						+ text + "')";
 
 				stmt.executeUpdate(sqlins);
-				num.close();
+
+				rs.close();
 				stmt.close();
 
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			DialogController.showDialog(DialogType.edit);
+			DialogController.showDialog(DialogType.regist);
 		}
 	}
 
@@ -89,15 +88,8 @@ public class DBAccess {
 
 		try {
 
-			// JDBCドライバーの指定
-			Class.forName("org.sqlite.JDBC");
-
-			// データベースに接続する なければ作成される
-			Connection con = DriverManager
-					.getConnection("jdbc:sqlite:src/SQLite/DB");
-
 			// Statementオブジェクト作成
-			Statement stmt = con.createStatement();
+			Statement stmt = createStatement();
 
 			// 問合せ文
 			String sql = "select * from test where title like '%" + title
@@ -105,6 +97,7 @@ public class DBAccess {
 					+ writer + "%' and publisher like '%" + publisher
 					+ "%' and start like '%" + start + "%' and end like '%"
 					+ end + "%'";
+
 			ResultSet rs = stmt.executeQuery(sql);
 
 			// データ表示
@@ -117,6 +110,7 @@ public class DBAccess {
 				String getStart = rs.getString("start");
 				String getEnd = rs.getString("end");
 				String getText = rs.getString("text");
+
 				table.getItems().add(
 						new View(getId, getTitle, getGenre, getWriter,
 								getPublisher, getStart, getEnd, getText));
@@ -125,8 +119,6 @@ public class DBAccess {
 			rs.close();
 			stmt.close();
 
-		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundException:" + e.getMessage());
 		} catch (SQLException e) {
 			System.out.println("SQLException:" + e.getMessage());
 		} catch (Exception e) {
@@ -136,22 +128,19 @@ public class DBAccess {
 
 	/**
 	 * DBレコード更新
+	 * 更新に成功 = true /
+	 * 更新に失敗 = false
 	 */
 	public static boolean upDate(String id, String title, String genre,
 			String writer, String publisher, String start, String end,
 			String text) {
+
 		diff = start.compareTo(end);
+
 		if (comparison(title, start, end)) {
 			try {
-				// JDBCドライバーの指定
-				Class.forName("org.sqlite.JDBC");
-
-				// データベースに接続する なければ作成される
-				Connection con = DriverManager
-						.getConnection("jdbc:sqlite:src/SQLite/DB");
-
 				// Statementオブジェクト作成
-				Statement stmt = con.createStatement();
+				Statement stmt = createStatement();
 
 				// 更新SQL
 				String sqlins = "update test set title = '" + title
@@ -159,11 +148,10 @@ public class DBAccess {
 						+ "' , publisher = '" + publisher + "' , start = '"
 						+ start + "' , end = '" + end + "' , text = '" + text
 						+ "' where id = " + id + "";
+
 				stmt.executeUpdate(sqlins);
 				stmt.close();
 
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -178,23 +166,15 @@ public class DBAccess {
 	 */
 	public static void delete(String id) {
 		try {
-			// JDBCドライバーの指定
-			Class.forName("org.sqlite.JDBC");
-
-			// データベースに接続する なければ作成される
-			Connection con = DriverManager
-					.getConnection("jdbc:sqlite:src/SQLite/DB");
-
 			// Statementオブジェクト作成
-			Statement stmt = con.createStatement();
+			Statement stmt = createStatement();
 
 			// 登録SQL
 			String sqlins = "delete from test where id = " + id + "";
+
 			stmt.executeUpdate(sqlins);
 			stmt.close();
 
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -213,15 +193,8 @@ public class DBAccess {
 		try {
 			buttonColumn.setCellFactory(new OpenerFactory());
 
-			// JDBCドライバーの指定
-			Class.forName("org.sqlite.JDBC");
-
-			// データベースに接続する なければ作成される
-			Connection con = DriverManager
-					.getConnection("jdbc:sqlite:src/SQLite/DB");
-
 			// Statementオブジェクト作成
-			Statement stmt = con.createStatement();
+			Statement stmt = createStatement();
 
 			// sql文作成
 			String sql = "select * from test order by id desc limit 10";
@@ -239,15 +212,15 @@ public class DBAccess {
 				String start = rs.getString("start");
 				String end = rs.getString("end");
 				String text = rs.getString("text");
+
 				table.getItems().add(
 						new View(id, title, genre, writer, publisher, start,
 								end, text));
 			}
+
 			rs.close();
 			stmt.close();
 
-		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundException:" + e.getMessage());
 		} catch (SQLException e) {
 			System.out.println("SQLException:" + e.getMessage());
 		} catch (Exception e) {
@@ -257,19 +230,16 @@ public class DBAccess {
 
 	/**
 	 * DBからid指定でレコードデータ取得
+	 *
+	 * @return view
 	 */
 	static View getData(String id) {
+
 		View view = null;
+
 		try {
-			// JDBCドライバーの指定
-			Class.forName("org.sqlite.JDBC");
-
-			// データベースに接続する なければ作成される
-			Connection con = DriverManager
-					.getConnection("jdbc:sqlite:src/SQLite/DB");
-
 			// Statementオブジェクト作成
-			Statement stmt = con.createStatement();
+			Statement stmt = createStatement();
 
 			// sql文作成
 			String sql = "select * from test where id = " + id + "";
@@ -294,8 +264,6 @@ public class DBAccess {
 
 			return view;
 
-		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundException:" + e.getMessage());
 		} catch (SQLException e) {
 			System.out.println("SQLException:" + e.getMessage());
 		} catch (Exception e) {
@@ -304,4 +272,36 @@ public class DBAccess {
 		return view;
 	}
 
+	/**
+	 * Statementオブジェクト作成
+	 *
+	 * @return stmt
+	 */
+	static Statement createStatement() {
+		try {
+			// JDBCドライバーの指定
+			Class.forName("org.sqlite.JDBC");
+
+			// データベースに接続する なければ作成される
+			Connection con = DriverManager
+					.getConnection("jdbc:sqlite:src/SQLite/DB");
+
+			// Statementオブジェクト作成
+			Statement stmt = con.createStatement();
+
+			return stmt;
+
+		} catch (ClassNotFoundException e) {
+			System.out.println("ClassNotFoundException:" + e.getMessage());
+			return null;
+
+		} catch (SQLException e) {
+			System.out.println("SQLException:" + e.getMessage());
+			return null;
+
+		} catch (Exception e) {
+			System.out.println("Exception:" + e.getMessage());
+			return null;
+		}
+	}
 }

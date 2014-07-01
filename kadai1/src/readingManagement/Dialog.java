@@ -25,6 +25,11 @@ public class Dialog implements Initializable {
 	@FXML
 	private Button noButton;
 
+	/**
+	 * 確認ダイアログで押したボタンの判別フラグ
+	 * on yesButton = true /
+	 * on noButton = false
+	 */
 	public static boolean buttonFlag;
 
 	public void setLabelText(String labelText) {

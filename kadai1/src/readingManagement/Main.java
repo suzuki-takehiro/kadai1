@@ -15,7 +15,9 @@ public class Main extends Application {
 
 	public static Stage stage;
 
-	// ウィンドウアイコン設定
+	/**
+	 * ウィンドウアイコン
+	 */
 	static Image icon = new Image(
 			Main.class.getResourceAsStream("windowIcon.gif"));
 
