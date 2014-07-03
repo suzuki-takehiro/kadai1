@@ -50,7 +50,7 @@
                            <HBox.margin>
                               <Insets />
                            </HBox.margin></Label>
-                        <TextField fx:id="genreField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <ComboBox fx:id="genreField" minWidth="160.0" prefWidth="164.0" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>

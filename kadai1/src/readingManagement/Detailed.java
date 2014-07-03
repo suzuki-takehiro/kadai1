@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -24,7 +25,8 @@ public class Detailed extends AnchorPane implements Initializable {
 	private TextField titleField;
 
 	@FXML
-	private TextField genreField;
+	private ComboBox<String> genreField;
+	String genreText = "";
 
 	@FXML
 	private TextField writerField;
@@ -42,7 +44,7 @@ public class Detailed extends AnchorPane implements Initializable {
 	private TextArea textField;
 
 	/**
-	 * Detailed表示レコードデータセット
+	 * Detailedに表示レコードデータをセット
 	 * @param setid
 	 * @param title
 	 * @param genre
@@ -57,7 +59,7 @@ public class Detailed extends AnchorPane implements Initializable {
 			String text) {
 		id = setid;
 		titleField.setText(title);
-		genreField.setText(genre);
+		genreField.setValue(genre);
 		writerField.setText(writer);
 		publisherField.setText(publisher);
 		startField.setValue(start);
@@ -67,6 +69,9 @@ public class Detailed extends AnchorPane implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+
+		ComboBoxController.setCBDate(genreField);
+
 	}
 
 	/**
@@ -131,7 +136,7 @@ public class Detailed extends AnchorPane implements Initializable {
 	 */
 	public boolean edit() {
 		String getTitle = titleField.getText();
-		String getGenre = genreField.getText();
+		String getGenre = genreField.getValue();
 		String getWriter = writerField.getText();
 		String getPublisher = publisherField.getText();
 		String getStart = "";

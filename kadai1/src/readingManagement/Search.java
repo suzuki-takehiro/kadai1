@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -50,7 +53,8 @@ public class Search extends AnchorPane implements Initializable {
 	private TextField titleField;
 
 	@FXML
-	private TextField genreField;
+	private ComboBox<String> genreField;
+	String genreText = "";
 
 	@FXML
 	private TextField writerField;
@@ -96,6 +100,21 @@ public class Search extends AnchorPane implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+
+		ComboBoxController.setCBDate(genreField);
+
+		/**
+		 * ComboBoxで選択したテキストを取得
+		 * gnreTextに代入
+		 */
+		genreField.getSelectionModel().selectedItemProperty()
+				.addListener(new ChangeListener<String>() {
+					@Override
+					public void changed(ObservableValue<? extends String> ov,
+							String old_val, String new_val) {
+						genreText = new_val;
+					}
+				});
 
 		/**
 		 * インスタンス
@@ -145,7 +164,7 @@ public class Search extends AnchorPane implements Initializable {
 
 		String getTitle = titleField.getText();
 
-		String getGenre = genreField.getText();
+		String getGenre = genreText;
 
 		String getWriter = writerField.getText();
 

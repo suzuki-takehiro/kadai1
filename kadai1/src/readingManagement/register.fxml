@@ -39,10 +39,10 @@
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label minWidth="-Infinity" prefWidth="45.0" text="タイトル" />
-                        <Label minWidth="-Infinity" prefWidth="45.0" text="※必須" styleClass="hissu"/>
+                        <Label minWidth="-Infinity" prefWidth="45.0" styleClass="hissu" text="※必須" />
                         <TextField fx:id="titleField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
                         <Label minWidth="-Infinity" prefWidth="45.0" text="ジャンル" />
-                        <TextField fx:id="genreField" prefWidth="75.0" HBox.hgrow="ALWAYS" />
+                        <ComboBox fx:id="genreField" prefWidth="145.0" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>
@@ -64,7 +64,7 @@
                   <HBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label minWidth="-Infinity" prefWidth="45.0" text="期間" />
-                        <Label minWidth="-Infinity" prefWidth="45.0" text="※必須" styleClass="hissu"/>
+                        <Label minWidth="-Infinity" prefWidth="45.0" styleClass="hissu" text="※必須" />
                         <DatePicker fx:id="startField" HBox.hgrow="ALWAYS" />
                         <Label alignment="CENTER" minWidth="-Infinity" prefWidth="45.0" text="～" />
                         <DatePicker fx:id="endField" HBox.hgrow="ALWAYS" />

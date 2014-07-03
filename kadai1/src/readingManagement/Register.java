@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -15,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import readingManagement.DialogController.DialogType;
 
 public class Register extends AnchorPane implements Initializable {
 
@@ -50,7 +54,8 @@ public class Register extends AnchorPane implements Initializable {
 	private TextField titleField;
 
 	@FXML
-	private TextField genreField;
+	private ComboBox<String> genreField;
+	String genreText = "";
 
 	@FXML
 	private TextField writerField;
@@ -97,6 +102,25 @@ public class Register extends AnchorPane implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
+		ComboBoxController.setCBDate(genreField);
+
+		genreField.getSelectionModel().selectedItemProperty()
+				.addListener(new ChangeListener<String>() {
+					@Override
+					public void changed(ObservableValue<? extends String> ov,
+							String old_val, String new_val) {
+						genreText = new_val;
+					}
+				});
+
+		table.getSelectionModel().selectedItemProperty()
+				.addListener(new ChangeListener<View>() {
+					@Override
+					public void changed(ObservableValue<? extends View> ov,
+							View old_val, View new_val) {
+					}
+				});
+
 		/**
 		 * インスタンス設定
 		 */
@@ -135,7 +159,7 @@ public class Register extends AnchorPane implements Initializable {
 	}
 
 	@FXML
-	//ウィンドウを閉じる
+	// ウィンドウを閉じる
 	protected void close() {
 		root.getScene().getWindow().hide();
 	}
@@ -146,7 +170,7 @@ public class Register extends AnchorPane implements Initializable {
 		DialogController.setParentType(true);
 
 		String getTitle = titleField.getText();
-		String getGenre = genreField.getText();
+		String getGenre = genreText;
 		String getWriter = writerField.getText();
 		String getPublisher = publisherField.getText();
 		String getStart = "";
@@ -158,9 +182,12 @@ public class Register extends AnchorPane implements Initializable {
 			getEnd = endField.getValue().toString();
 		}
 		String getText = textField.getText();
-		DBAccess.regist(getTitle, getGenre, getWriter, getPublisher, getStart,
-				getEnd, getText);
-		registerView();
+
+		if (DBAccess.regist(getTitle, getGenre, getWriter, getPublisher,
+				getStart, getEnd, getText)) {
+			registerView();
+			DialogController.showDialog(DialogType.regist);
+		}
 	}
 
 	/**

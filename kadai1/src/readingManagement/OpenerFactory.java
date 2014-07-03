@@ -23,6 +23,8 @@ class OpenerFactory implements
 
 	public static Stage stage;
 
+	private Button button;
+
 	@Override
 	public TableCell<View, String> call(TableColumn<View, String> param) {
 		TableCell<View, String> tableCell = new TableCell<View, String>() {
@@ -35,7 +37,8 @@ class OpenerFactory implements
 				HBox pane = new HBox();
 				pane.setAlignment(Pos.CENTER);
 
-				Button button = new Button("詳細を開く");
+				button = new Button("詳細を開く");
+				button.setDisable(false);
 				button.setOnAction(new EventHandler<ActionEvent>() {
 
 					@Override
@@ -46,6 +49,9 @@ class OpenerFactory implements
 				pane.getChildren().add(button);
 				return pane;
 			}
+
+			//public void onBttonDisable(){button.setDisable(false);}
+			//public void offButtonDisable(){button.setDisable(true);}
 
 			@Override
 			protected void updateItem(String id, boolean empty) {
@@ -89,7 +95,7 @@ class OpenerFactory implements
 					stage.setTitle("Detailed");
 					stage.getIcons().addAll(Main.icon);
 					stage.setScene(scene);
-					stage.setWidth(540);
+					stage.setWidth(518);
 					stage.setHeight(280);
 
 					// ダイアログ表示位置調整

@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -41,8 +43,10 @@ public class DBAccess {
 
 	/**
 	 * DB登録
+	 *
+	 * @return true/false
 	 */
-	public static void regist(String title, String genre, String writer,
+	public static boolean regist(String title, String genre, String writer,
 			String publisher, String start, String end, String text) {
 
 		diff = start.compareTo(end);
@@ -67,12 +71,12 @@ public class DBAccess {
 
 				rs.close();
 				stmt.close();
-
+				return true;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			DialogController.showDialog(DialogType.regist);
 		}
+		return false;
 	}
 
 	/**
@@ -127,9 +131,7 @@ public class DBAccess {
 	}
 
 	/**
-	 * DBレコード更新
-	 * 更新に成功 = true /
-	 * 更新に失敗 = false
+	 * DBレコード更新 更新に成功 = true / 更新に失敗 = false
 	 */
 	public static boolean upDate(String id, String title, String genre,
 			String writer, String publisher, String start, String end,
@@ -273,6 +275,44 @@ public class DBAccess {
 	}
 
 	/**
+	 * DBに登録されているgenreの種類を取得
+	 *
+	 * @return String[] dbGenre
+	 */
+	static List<String> getDBGenre() {
+
+		List<String> list = new ArrayList<String>();
+		try {
+			// Statementオブジェクト作成
+			Statement stmt = createStatement();
+
+			// sql文作成
+			String sql = "select genre from test group by genre";
+
+			// sql問合せ
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				if (!(rs.getString("genre").matches("^\\s*\\s$"))
+						&& rs.getString("genre").matches(".+")
+						&& !(rs.getString("genre") == null)) {
+					list.add(rs.getString("genre"));
+				}
+			}
+
+			rs.close();
+			stmt.close();
+
+		} catch (SQLException e) {
+			System.out.println("SQLException:" + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("Exception:" + e.getMessage());
+		}
+
+		return list;
+	}
+
+	/**
 	 * Statementオブジェクト作成
 	 *
 	 * @return stmt
@@ -284,7 +324,7 @@ public class DBAccess {
 
 			// データベースに接続する なければ作成される
 			Connection con = DriverManager
-					.getConnection("jdbc:sqlite:src/SQLite/DB");
+					.getConnection(/* "jdbc:sqlite:src/SQLite/DB" */"jdbc:sqlite:src/SQLite/DB");
 
 			// Statementオブジェクト作成
 			Statement stmt = con.createStatement();
