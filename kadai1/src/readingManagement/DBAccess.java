@@ -324,7 +324,7 @@ public class DBAccess {
 
 			// データベースに接続する なければ作成される
 			Connection con = DriverManager
-					.getConnection(/* "jdbc:sqlite:src/SQLite/DB" */"jdbc:sqlite:src/SQLite/DB");
+					.getConnection("jdbc:sqlite:src/SQLite/DB");
 
 			// Statementオブジェクト作成
 			Statement stmt = con.createStatement();

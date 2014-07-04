@@ -1,5 +1,6 @@
 package readingManagement;
 
+
 public class View {
 	private String id;
 	private String title;
@@ -9,6 +10,7 @@ public class View {
 	private String start;
 	private String end;
 	private String text;
+	private View instance;
 
 	public View(String id, String title, String genre, String writer,
 			String publisher, String start, String end, String text) {
@@ -20,7 +22,10 @@ public class View {
 		this.start = start;
 		this.end = end;
 		this.text = text;
+		instance = this;
 	}
+
+
 
 	public String getId() {
 		return id;
@@ -84,5 +89,9 @@ public class View {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public View getViewInstance(){
+		return instance;
 	}
 }

@@ -23,22 +23,26 @@ class OpenerFactory implements
 
 	public static Stage stage;
 
-	private Button button;
-
 	@Override
 	public TableCell<View, String> call(TableColumn<View, String> param) {
 		TableCell<View, String> tableCell = new TableCell<View, String>() {
 
-			private Pane pane = createPane();
+			//TableCell<View, String> instance = this;
 
-			private String id;
+			//TableView.TableViewSelectionModel<View> selectionmModel;
+
+			Pane pane = createPane();
+
+			String id;
 
 			private Pane createPane() {
+
 				HBox pane = new HBox();
 				pane.setAlignment(Pos.CENTER);
 
-				button = new Button("詳細を開く");
-				button.setDisable(false);
+				Button button = new Button("詳細を開く");
+				//button.disableProperty().bind(selectionmModel.cellSelectionEnabledProperty());
+
 				button.setOnAction(new EventHandler<ActionEvent>() {
 
 					@Override
@@ -46,12 +50,15 @@ class OpenerFactory implements
 						openDialog();
 					}
 				});
+
 				pane.getChildren().add(button);
 				return pane;
 			}
 
-			//public void onBttonDisable(){button.setDisable(false);}
-			//public void offButtonDisable(){button.setDisable(true);}
+			//public TableCell<View, String> getInstance() {return instance;}
+
+			// public void onBttonDisable(){button.setDisable(false);}
+			// public void offButtonDisable(){button.setDisable(true);}
 
 			@Override
 			protected void updateItem(String id, boolean empty) {

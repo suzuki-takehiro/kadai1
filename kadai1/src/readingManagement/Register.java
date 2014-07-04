@@ -55,7 +55,6 @@ public class Register extends AnchorPane implements Initializable {
 
 	@FXML
 	private ComboBox<String> genreField;
-	String genreText = "";
 
 	@FXML
 	private TextField writerField;
@@ -99,25 +98,20 @@ public class Register extends AnchorPane implements Initializable {
 	@FXML
 	private TableColumn<View, String> buttonColumn;
 
+	boolean test;
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
+		//ComboBoxに項目をセット
 		ComboBoxController.setCBDate(genreField);
-
-		genreField.getSelectionModel().selectedItemProperty()
-				.addListener(new ChangeListener<String>() {
-					@Override
-					public void changed(ObservableValue<? extends String> ov,
-							String old_val, String new_val) {
-						genreText = new_val;
-					}
-				});
 
 		table.getSelectionModel().selectedItemProperty()
 				.addListener(new ChangeListener<View>() {
 					@Override
 					public void changed(ObservableValue<? extends View> ov,
 							View old_val, View new_val) {
+						//selectionModel.cellSelectionEnabledProperty().bind();
 					}
 				});
 
@@ -170,7 +164,7 @@ public class Register extends AnchorPane implements Initializable {
 		DialogController.setParentType(true);
 
 		String getTitle = titleField.getText();
-		String getGenre = genreText;
+		String getGenre = genreField.getValue();
 		String getWriter = writerField.getText();
 		String getPublisher = publisherField.getText();
 		String getStart = "";
