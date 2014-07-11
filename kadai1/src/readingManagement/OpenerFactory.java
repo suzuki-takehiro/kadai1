@@ -27,7 +27,9 @@ class OpenerFactory implements
 	public TableCell<View, String> call(TableColumn<View, String> param) {
 		TableCell<View, String> tableCell = new TableCell<View, String>() {
 
-			//TableCell<View, String> instance = this;
+			//TableCell<View, String> instance;
+
+			//View veiw = View.getViewInstance();
 
 			//TableView.TableViewSelectionModel<View> selectionmModel;
 
@@ -41,7 +43,8 @@ class OpenerFactory implements
 				pane.setAlignment(Pos.CENTER);
 
 				Button button = new Button("詳細を開く");
-				//button.disableProperty().bind(selectionmModel.cellSelectionEnabledProperty());
+
+				//button.disableProperty().bind();
 
 				button.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -52,10 +55,11 @@ class OpenerFactory implements
 				});
 
 				pane.getChildren().add(button);
+				//System.out.println(id);
 				return pane;
 			}
 
-			//public TableCell<View, String> getInstance() {return instance;}
+			// public TableCell<View, String> getInstance() {return instance;}
 
 			// public void onBttonDisable(){button.setDisable(false);}
 			// public void offButtonDisable(){button.setDisable(true);}

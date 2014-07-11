@@ -1,6 +1,7 @@
 package readingManagement;
 
 
+
 public class View {
 	private String id;
 	private String title;
@@ -11,6 +12,7 @@ public class View {
 	private String end;
 	private String text;
 	private View instance;
+	//private BooleanProperty flag;
 
 	public View(String id, String title, String genre, String writer,
 			String publisher, String start, String end, String text) {

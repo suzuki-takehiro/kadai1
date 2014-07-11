@@ -103,7 +103,7 @@ public class Register extends AnchorPane implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
-		//ComboBoxに項目をセット
+		// ComboBoxに項目をセット
 		ComboBoxController.setCBDate(genreField);
 
 		table.getSelectionModel().selectedItemProperty()
@@ -111,7 +111,7 @@ public class Register extends AnchorPane implements Initializable {
 					@Override
 					public void changed(ObservableValue<? extends View> ov,
 							View old_val, View new_val) {
-						//selectionModel.cellSelectionEnabledProperty().bind();
+						// selectionModel.cellSelectionEnabledProperty().bind();
 					}
 				});
 
